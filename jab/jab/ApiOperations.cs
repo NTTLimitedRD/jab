@@ -48,6 +48,7 @@ namespace jab
                 foreach (var operation in path.Value)
                 {
                     _operations.Add( new object[] {
+                        _service,
                         path.Key,
                         operation.Key,
                         operation.Value

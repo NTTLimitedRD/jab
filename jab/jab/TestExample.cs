@@ -9,6 +9,7 @@ namespace jab
     {
         [Theory, ParameterisedClassData(typeof(ApiOperations), "samples/example.json")]
         public void DeleteMethodsShouldNotTakeFormEncodedData(
+            SwaggerService service,
             string path, 
             SwaggerOperationMethod method, 
             SwaggerOperation operation)
