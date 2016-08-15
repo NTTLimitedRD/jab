@@ -1,11 +1,12 @@
-﻿using NSwag;
+﻿using jab.Attributes;
+using NSwag;
 using Xunit;
 
 namespace jab
 {
-    class TestExample
+    public class TestExample
     {
-        [Theory, ClassData(typeof(ApiOperations))]
+        [Theory, ParameterisedClassData(typeof(ApiOperations), "samples/example.json")]
         public void ExampleCase(string path, SwaggerOperationMethod method, SwaggerOperation operation)
         {
             Assert.Equal("blue", "green");
