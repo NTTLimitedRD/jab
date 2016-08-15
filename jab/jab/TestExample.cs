@@ -1,15 +1,25 @@
 ﻿using jab.Attributes;
 using NSwag;
 using Xunit;
+using System.Linq;
 
 namespace jab
 {
     public class TestExample
     {
         [Theory, ParameterisedClassData(typeof(ApiOperations), "samples/example.json")]
-        public void ExampleCase(string path, SwaggerOperationMethod method, SwaggerOperation operation)
+        public void DeleteMethodsShouldNotTakeFormEncodedData(
+            string path, 
+            SwaggerOperationMethod method, 
+            SwaggerOperation operation)
         {
-            Assert.Equal("blue", "green");
+            if (method == SwaggerOperationMethod.Delete)
+            {
+                Assert.Null(operation.ActualConsumes);
+            } else
+            {
+                Assert.True(true);
+            }
         }
     }
 }
