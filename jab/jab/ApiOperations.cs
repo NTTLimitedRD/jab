@@ -19,7 +19,7 @@ namespace jab
             _service = SwaggerLoader.LoadServiceFromFile(_swaggerFilePath);
             _paths = _service.Paths;
 
-            var operations = new List<object[]>();
+            _operations = new List<object[]>();
 
             foreach(var path in _paths)
             {
@@ -34,7 +34,6 @@ namespace jab
                 }
                 
             }
-            _operations = operations;
         }
 
         public IEnumerator<object[]> GetEnumerator()
