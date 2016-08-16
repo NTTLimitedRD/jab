@@ -16,7 +16,8 @@ namespace jab.tests
         {
             "application/x-www-form-urlencoded",
             "application/xml",
-            "application/json"
+            "application/json",
+            "multipart/form-data"
         };
 
         /// <summary>
@@ -93,10 +94,10 @@ namespace jab.tests
         public void NoNonStandardProductFormats(IJabApiOperation operation)
         {
             IList<string> nonStandardFormats =
-                operation.Operation.ActualProduces.Where(product => !StandardFormats.Contains(product)).ToList();
+                operation.Operation?.Produces?.Where(product => !StandardFormats.Contains(product)).ToList();
 
             // TODO: Move this to a separate method.
-            if (nonStandardFormats.Count > 0)
+            if (nonStandardFormats?.Count > 0)
             {
                 throw new XunitException(
                     $"{string.Concat(operation.Service.BaseUrl, operation.Path)} produces the nonstandard formats '{(string.Join(", ", nonStandardFormats))}'");
@@ -111,10 +112,10 @@ namespace jab.tests
         public void NoNonStandardConsumptionFormats(IJabApiOperation operation)
         {
             IList<string> nonStandardFormats =
-                operation.Operation.ActualConsumes.Where(product => !StandardFormats.Contains(product)).ToList();
+                operation.Operation?.Consumes?.Where(consumption => !StandardFormats.Contains(consumption)).ToList();
 
             // TODO: Move this to a separate method.
-            if (nonStandardFormats.Count > 0)
+            if (nonStandardFormats?.Count > 0)
             {
                 throw new XunitException(
                     $"{string.Concat(operation.Service.BaseUrl, operation.Path)} consumes the nonstandard formats '{(string.Join(", ", nonStandardFormats))}'");
