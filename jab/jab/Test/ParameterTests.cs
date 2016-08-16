@@ -89,8 +89,6 @@ namespace jab.tests
 
         /// <summary>
         /// Do not include secrets in query parameters. These get logged or included in browser history.
-        /// <para></para>
-        /// Similar to https://www.owasp.org/index.php/REST_Security_Cheat_Sheet#Authentication_and_session_management.
         /// </summary>
         /// <param name="operation"></param>
         [Theory, ParameterisedClassData(typeof(ApiOperations), testDefinition)]
@@ -109,8 +107,6 @@ namespace jab.tests
 
         /// <summary>
         /// Do not include secrets in query parameters. These get logged or included in browser history.
-        /// <para></para>
-        /// Similar to https://www.owasp.org/index.php/REST_Security_Cheat_Sheet#Authentication_and_session_management.
         /// </summary>
         /// <param name="operation"></param>
         [Theory, ParameterisedClassData(typeof(ApiOperations), testDefinition)]
