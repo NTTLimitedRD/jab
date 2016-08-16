@@ -1,4 +1,6 @@
-﻿using NSwag;
+﻿using System;
+using System.Collections.Generic;
+using NSwag;
 using Xunit;
 using System.Linq;
 using jab.Interfaces;
@@ -9,6 +11,10 @@ namespace jab
     {
         const string testDefinition = "fixtures/swagger.json";
 
+        /// <summary>
+        /// Operations using the "DELETE" verb should not accept form encoded data.
+        /// </summary>
+        /// <param name="operation"></param>
         [Theory, ParameterisedClassData(typeof(ApiOperations), testDefinition)]
         public void DeleteMethodsShouldNotTakeFormEncodedData(
             IJabApiOperation operation)
@@ -16,10 +22,30 @@ namespace jab
             if (operation.Method == SwaggerOperationMethod.Delete)
             {
                 Assert.Null(operation.Operation.ActualConsumes);
-            } else
+            }
+            else
             {
                 Assert.True(true);
             }
+        }
+
+        /// <summary>
+        /// Use the "DELETE" verb for delete or removal operations.
+        /// </summary>
+        /// <param name="operation"></param>
+        [Theory, ParameterisedClassData(typeof(ApiOperations), testDefinition)]
+        public void UseDeleteVerbForDelete(
+            IJabApiOperation operation)
+        {
+            List<string> deleteSynonyms = new List<string>
+            {
+                "delete",
+                "remove"
+            };
+
+            Assert.False(operation.Method != SwaggerOperationMethod.Delete
+                && deleteSynonyms.Any(term => operation.Path.IndexOf(term, 0, StringComparison.InvariantCultureIgnoreCase) != -1),
+                $"{operation.Path} should use 'DELETE' verb instead of '{operation.Method}'");
         }
 
         /// <summary>
