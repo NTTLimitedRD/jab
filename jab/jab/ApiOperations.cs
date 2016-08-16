@@ -9,13 +9,13 @@ namespace jab
     /// <summary>
     /// An enumeration class for API definitions
     /// </summary>
-    public class ApiOperations: IEnumerable<IJabApiOperation>
+    public class ApiOperations: IEnumerable<object[]>
     {
         /// <summary>
         /// Enumerable operations (string path, SwaggerOperationMethod method, SwaggerOperation operation)
         /// for this API
         /// </summary>
-        private List<IJabApiOperation> _operations;
+        private List<object[]> _operations;
 
         /// <summary>
         /// Dictionary of operations available on this API
@@ -42,18 +42,21 @@ namespace jab
             _service = SwaggerLoader.LoadServiceFromFile(_swaggerFilePath);
             _paths = _service.Paths;
 
-            _operations = new List<IJabApiOperation>();
+            _operations = new List<object[]>();
 
             foreach(var path in _paths)
             {
                 foreach (var operation in path.Value)
                 {
-                    _operations.Add( new JabApiOperation {
-                        Service = _service,
-                        Path = path.Key,
-                        Method = operation.Key,
-                        Operation = operation.Value
-                    }
+                    _operations.Add(
+                        new object[] {
+                            new JabApiOperation {
+                                Service = _service,
+                                Path = path.Key,
+                                Method = operation.Key,
+                                Operation = operation.Value
+                            }
+                        }
                     );
                 }
             }
@@ -63,7 +66,7 @@ namespace jab
         /// Enumerate the API operations.
         /// </summary>
         /// <returns>Collection of possible operations (string path, SwaggerOperationMethod method, SwaggerOperation operation)</returns>
-        public IEnumerator<IJabApiOperation> GetEnumerator()
+        public IEnumerator<object[]> GetEnumerator()
         {
             return _operations.GetEnumerator();
         }
