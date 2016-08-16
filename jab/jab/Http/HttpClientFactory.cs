@@ -2,7 +2,7 @@
 
 namespace jab.Http
 {
-    public static class HttpClientFactory
+    public static class JabHttpClientFactory
     {
         public static HttpClient GetClient(string baseUrl)
         {
