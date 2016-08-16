@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using NSwag;
 using Xunit;
 using System.Linq;
 using jab.Interfaces;
+using Xunit.Sdk;
 
 namespace jab.tests
 {
@@ -63,11 +65,67 @@ namespace jab.tests
                 "key"
             };
 
-            Assert.False(
-                operation.Operation.ActualParameters.Any(
+            IList<SwaggerParameter> queryParametersContainingSecrets =
+                new List<SwaggerParameter>(operation.Operation.ActualParameters.Where(
                     parameter => parameter.Kind == SwaggerParameterKind.Query
-                    && secretSynonyms.Any(term => parameter.Name.IndexOf(term, 0, StringComparison.InvariantCultureIgnoreCase) != -1)),
-                $"{operation.Path} includes one or more secrets in query parameters");
+                                 && secretSynonyms.Any(term => parameter.Name.IndexOf(term, 0, StringComparison.InvariantCultureIgnoreCase) != -1)));
+
+            // TODO: Move this to a separate method.
+            if (queryParametersContainingSecrets.Count > 0)
+            {
+                throw new XunitException(
+                    $"{Path.Combine(operation.Service.BaseUrl, operation.Path)} passes secrets in the following query parameters '{(string.Join(", ", queryParametersContainingSecrets.Select(p => p.Name)))}'");
+            }
+        }
+
+        /// <summary>
+        /// Do not include secrets in query parameters. These get logged or included in browser history.
+        /// <para></para>
+        /// Similar to https://www.owasp.org/index.php/REST_Security_Cheat_Sheet#Authentication_and_session_management.
+        /// </summary>
+        /// <param name="operation"></param>
+        [Theory, ParameterisedClassData(typeof(ApiOperations), testDefinition)]
+        public void NoNonStandardProductFormats(IJabApiOperation operation)
+        {
+            List<string> standardFormats = new List<string>
+            {
+                "application/x-www-form-urlencoded",
+                "application/xml",
+                "application/json"
+            };
+
+            Assert.False(
+                operation.Operation.ActualProduces.Any(product => !standardFormats.Contains(product)),
+                $"{operation.Path} uses nonstandard products");
+        }
+
+        /// <summary>
+        /// Do not include secrets in query parameters. These get logged or included in browser history.
+        /// <para></para>
+        /// Similar to https://www.owasp.org/index.php/REST_Security_Cheat_Sheet#Authentication_and_session_management.
+        /// </summary>
+        /// <param name="operation"></param>
+        [Theory, ParameterisedClassData(typeof(ApiOperations), testDefinition)]
+        public void NoNonStandardConsumptionFormats(IJabApiOperation operation)
+        {
+            List<string> standardFormats = new List<string>
+            {
+                "application/x-www-form-urlencoded",
+                "application/xml",
+                "application/json"
+            };
+
+            IList<SwaggerParameter> nonStandardFormats =
+                new List<SwaggerParameter>(operation.Operation.ActualParameters.Where(
+                    parameter => parameter.Kind == SwaggerParameterKind.Query
+                                 && standardFormats.Any(term => parameter.Name.IndexOf(term, 0, StringComparison.InvariantCultureIgnoreCase) != -1)));
+
+            // TODO: Move this to a separate method.
+            if (nonStandardFormats.Count > 0)
+            {
+                throw new XunitException(
+                    $"{Path.Combine(operation.Service.BaseUrl, operation.Path)} uses the nonstandard formats '{(string.Join(", ", nonStandardFormats.Select(p => p.Name)))}'");
+            }
         }
     }
 }
