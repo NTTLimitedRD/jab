@@ -8,7 +8,7 @@ using Xunit;
 
 namespace jab.Test
 {
-    public class ServiceTests
+    public partial class ServiceTests
     {
         const string testDefinition = "samples/example.json";
 
