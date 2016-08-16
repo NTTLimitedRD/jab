@@ -7,7 +7,7 @@ namespace jab
 {
     public partial class ApiBestPracticeTestBase
     {
-        const string testDefinition = "samples/example.json";
+        const string testDefinition = "fixtures/swagger.json";
 
         [Theory, ParameterisedClassData(typeof(ApiOperations), testDefinition)]
         public void DeleteMethodsShouldNotTakeFormEncodedData(

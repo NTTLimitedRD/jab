@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi", "WebApi\WebApi.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "jab.extend.example", "jab.example\jab.extend.example.csproj", "{83D6B088-C2E4-4128-8A1A-CEB89859EAEB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "jab.console", "jab.console\jab.console.csproj", "{8FCC7BCD-0C6B-459E-9870-26DBF33E88ED}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{83D6B088-C2E4-4128-8A1A-CEB89859EAEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{83D6B088-C2E4-4128-8A1A-CEB89859EAEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{83D6B088-C2E4-4128-8A1A-CEB89859EAEB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8FCC7BCD-0C6B-459E-9870-26DBF33E88ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FCC7BCD-0C6B-459E-9870-26DBF33E88ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FCC7BCD-0C6B-459E-9870-26DBF33E88ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FCC7BCD-0C6B-459E-9870-26DBF33E88ED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
