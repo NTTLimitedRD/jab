@@ -2,6 +2,7 @@
 using System.Threading;
 using Xunit.Runners;
 using System.IO;
+using System.Reflection;
 
 namespace jab.console
 {
@@ -25,7 +26,7 @@ namespace jab.console
                 return 2;
             }
 
-            string thisPath = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            string thisPath = Assembly.GetExecutingAssembly().GetDirectoryPath();
             string fixturesPath = Path.Combine(thisPath, "fixtures");
 
             // does the fixtures folder exist?
@@ -33,7 +34,7 @@ namespace jab.console
                 Directory.CreateDirectory(fixturesPath);
 
             // Copy the given fixture across
-            File.Copy(args[1], Path.Combine(fixturesPath, "swagger.json"), true);
+            File.Copy(args[0], Path.Combine(fixturesPath, "swagger.json"), true);
 
             var testAssembly = "jab.dll";
             var typeName = typeof(jab.tests.ApiBestPracticeTestBase).Name;
@@ -95,5 +96,14 @@ namespace jab.console
             }
         }
     }
+
+    public static class AssemblyExtensions {
+        public static string GetDirectoryPath(this Assembly assembly)
+        {
+            string filePath = new Uri(assembly.CodeBase).LocalPath;
+            return Path.GetDirectoryName(filePath);
+        }
+    }
+
 }
 
