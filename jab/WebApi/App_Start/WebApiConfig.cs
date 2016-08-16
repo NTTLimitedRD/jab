@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 
+
 namespace WebApi
 {
-	using Swashbuckle.Application;
+    using Filters;
+    using Swashbuckle.Application;
 
-	public static class WebApiConfig
+    public static class WebApiConfig
     {
         public static void Register(HttpConfiguration config)
         {
@@ -21,6 +23,8 @@ namespace WebApi
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
+            config.Filters.Add(new SimpleAuthenticationFilter());
         }
     }
 }
