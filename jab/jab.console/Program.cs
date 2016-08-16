@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading;
-using Xunit.Runners;
+using NUnit.Engine;
 using System.IO;
 using System.Reflection;
 using System.Reactive.Subjects;
@@ -58,49 +58,18 @@ namespace jab.console
                 Console.ResetColor();
             });
 
-            using (var runner = AssemblyRunner.WithAppDomain(testAssembly))
+            using (ITestEngine engine = new TestEngine())
+            using (ITestRunner testRunner = engine.GetRunner(new TestPackage("jab.dll")))
             {
-                runner.OnDiscoveryComplete = OnDiscoveryComplete;
-                runner.OnExecutionComplete = OnExecutionComplete;
-                runner.OnTestFailed = OnTestFailed;
-                runner.OnTestSkipped = OnTestSkipped;
+                TestEventListener testEventListener;
 
-                Console.WriteLine("Discovering...");
-                runner.Start(typeName);
-
-                finished.WaitOne();
-                finished.Dispose();
-
-                Console.ReadKey();
-
-                return result;
+                testEventListener = new TestEventListener();
+                testRunner.Run(testEventListener, null);
             }
-        }
 
-        static void OnDiscoveryComplete(DiscoveryCompleteInfo info)
-        {
-            output.OnNext($"Running {info.TestCasesToRun} of {info.TestCasesDiscovered} tests...");
-        }
+            Console.ReadKey();
 
-        static void OnExecutionComplete(ExecutionCompleteInfo info)
-        {
-            output.OnNext($"Finished: {info.TotalTests} tests in {Math.Round(info.ExecutionTime, 3)}s ({info.TestsFailed} failed, {info.TestsSkipped} skipped)");
-
-            finished.Set();
-        }
-
-        static void OnTestFailed(TestFailedInfo info)
-        {            
-            errorOutput.OnNext(String.Format("[FAIL] {0}: {1}", info.TestDisplayName, info.ExceptionMessage));
-            if (info.ExceptionStackTrace != null)
-                errorOutput.OnNext(info.ExceptionStackTrace);
-
-            result = 1;
-        }
-
-        static void OnTestSkipped(TestSkippedInfo info)
-        {
-            output.OnNext(String.Format("[SKIP] {0}: {1}", info.TestDisplayName, info.SkipReason));
+            return result;
         }
     }
 
