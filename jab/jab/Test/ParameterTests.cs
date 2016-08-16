@@ -13,6 +13,14 @@ namespace jab.tests
     {
         const string testDefinition = "fixtures/swagger.json";
 
+        // Standard web service formats
+        private static readonly List<string> StandardFormats = new List<string>
+        {
+            "application/x-www-form-urlencoded",
+            "application/xml",
+            "application/json"
+        };
+
         /// <summary>
         /// Operations using the "DELETE" verb should not accept form encoded data.
         /// </summary>
@@ -88,15 +96,8 @@ namespace jab.tests
         [Theory, ParameterisedClassData(typeof(ApiOperations), testDefinition)]
         public void NoNonStandardProductFormats(IJabApiOperation operation)
         {
-            List<string> standardFormats = new List<string>
-            {
-                "application/x-www-form-urlencoded",
-                "application/xml",
-                "application/json"
-            };
-
             IList<string> nonStandardFormats =
-                operation.Operation.ActualProduces.Where(product => !standardFormats.Contains(product)).ToList();
+                operation.Operation.ActualProduces.Where(product => !StandardFormats.Contains(product)).ToList();
 
             // TODO: Move this to a separate method.
             if (nonStandardFormats.Count > 0)
@@ -115,15 +116,8 @@ namespace jab.tests
         [Theory, ParameterisedClassData(typeof(ApiOperations), testDefinition)]
         public void NoNonStandardConsumptionFormats(IJabApiOperation operation)
         {
-            List<string> standardFormats = new List<string>
-            {
-                "application/x-www-form-urlencoded",
-                "application/xml",
-                "application/json"
-            };
-
             IList<string> nonStandardFormats =
-                operation.Operation.ActualConsumes.Where(product => !standardFormats.Contains(product)).ToList();
+                operation.Operation.ActualConsumes.Where(product => !StandardFormats.Contains(product)).ToList();
 
             // TODO: Move this to a separate method.
             if (nonStandardFormats.Count > 0)
