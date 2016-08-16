@@ -11,8 +11,6 @@ namespace jab.tests
 {
     public partial class ApiBestPracticeTestBase
     {
-        const string testDefinition = "fixtures/swagger.json";
-
         // Standard web service formats
         private static readonly List<string> StandardFormats = new List<string>
         {

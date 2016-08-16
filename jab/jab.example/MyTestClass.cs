@@ -1,12 +1,17 @@
 ﻿using jab.Interfaces;
 using Xunit;
 using System.Linq;
+using jab.Fixture;
 
 namespace jab.example
 {
     public class MyTestClass
         : tests.ApiBestPracticeTestBase
     {
+        public MyTestClass(ApiTestFixture fixture) : base(fixture)
+        {
+        }
+
         /// <summary>
         /// DELETE operations should always contain a ID parameter.
         /// </summary>

@@ -33,6 +33,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.4.0.0\lib\net451\Autofac.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
@@ -84,6 +88,7 @@
     <Compile Include="Extensions\ActiveTestException.cs" />
     <Compile Include="Extensions\ActiveTheoryDiscoverer.cs" />
     <Compile Include="Extensions\ActiveTheoryTestCase.cs" />
+    <Compile Include="Fixture\ApiTestFixture.cs" />
     <Compile Include="Http\HttpClientFactory.cs" />
     <Compile Include="Http\SwaggerServiceExtensions.cs" />
     <Compile Include="Interfaces\IJabApiOperation.cs" />
@@ -92,6 +97,7 @@
     <Compile Include="ApiOperations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Test\ActiveParameterTests.cs" />
+    <Compile Include="Test\ApiBestPracticeTestBase.cs" />
     <Compile Include="Test\ParameterTests.cs" />
     <Compile Include="Test\ServiceTests.cs" />
   </ItemGroup>
