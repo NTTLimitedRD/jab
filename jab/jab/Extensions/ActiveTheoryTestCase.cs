@@ -22,14 +22,27 @@ namespace jab.Extensions
         {
             // Duplicated code from SkippableFactTestCase. I'm sure we could find a way to de-dup with some thought.
             var skipMessageBus = new ActiveFactMessageBus(messageBus);
-            var result = await base.RunAsync(diagnosticMessageSink, skipMessageBus, constructorArguments, aggregator, cancellationTokenSource);
-            if (skipMessageBus.DynamicallySkippedTestCount > 0)
+
+            var envVar = Environment.GetEnvironmentVariables(EnvironmentVariableTarget.Process);
+
+            if (envVar.Contains("ACTIVE_TESTS"))
             {
-                result.Failed -= skipMessageBus.DynamicallySkippedTestCount;
-                result.Skipped += skipMessageBus.DynamicallySkippedTestCount;
+                var result = await base.RunAsync(diagnosticMessageSink, skipMessageBus, constructorArguments, aggregator, cancellationTokenSource);
+                if (skipMessageBus.DynamicallySkippedTestCount > 0)
+                {
+                    result.Failed -= skipMessageBus.DynamicallySkippedTestCount;
+                    result.Skipped += skipMessageBus.DynamicallySkippedTestCount;
+                }
+
+                return result;
+            } else
+            {
+                RunSummary skipResult = new RunSummary();
+                skipResult.Skipped += 1;
+                return skipResult;
             }
 
-            return result;
+            
         }
     }
 

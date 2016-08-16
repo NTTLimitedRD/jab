@@ -83,6 +83,7 @@
     <Compile Include="Attributes\ActiveTheoryAttribute.cs" />
     <Compile Include="Attributes\ApiOperationsDataAttribute.cs" />
     <Compile Include="Attributes\ParameterisedClassDataAttribute.cs" />
+    <Compile Include="Constants.cs" />
     <Compile Include="Extensions\ActiveFactMessageBus.cs" />
     <Compile Include="Extensions\ActiveFactTestCase.cs" />
     <Compile Include="Extensions\ActiveTestException.cs" />

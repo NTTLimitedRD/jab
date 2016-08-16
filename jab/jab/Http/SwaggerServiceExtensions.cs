@@ -7,7 +7,7 @@ namespace jab.Http
     {
         public static HttpClient GetHttpClient(this SwaggerService service, string baseUrl)
         {
-            return HttpClientFactory.GetClient(baseUrl);
+            return JabHttpClientFactory.GetClient(baseUrl);
         }
     }
 }
