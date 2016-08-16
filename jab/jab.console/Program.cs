@@ -44,8 +44,8 @@ namespace jab.console
             // Copy the given fixture across
             File.Copy(args[0], Path.Combine(fixturesPath, "swagger.json"), true);
 
-            var testAssembly = "jab.dll";
-            var typeName = typeof(jab.tests.ApiBestPracticeTestBase).Name;
+            var testAssembly = Path.Combine(thisPath, "jab.dll");
+            var typeName = typeof(jab.tests.ApiBestPracticeTestBase).FullName;
 
             output.Subscribe(msg => Console.WriteLine(msg));
 
@@ -70,6 +70,8 @@ namespace jab.console
 
                 finished.WaitOne();
                 finished.Dispose();
+
+                Console.ReadKey();
 
                 return result;
             }
