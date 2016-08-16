@@ -8,10 +8,8 @@ using Xunit;
 
 namespace jab.tests
 {
-    public partial class ServiceTests
+    public partial class ApiBestPracticeTestBase
     {
-        const string testDefinition = "samples/example.json";
-
         /// <summary>
         /// Require HTTPS support.
         /// </summary>
