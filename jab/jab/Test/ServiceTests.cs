@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using NSwag;
 using Xunit;
 
-namespace jab.Test
+namespace jab.tests
 {
     public class ServiceTests
     {
