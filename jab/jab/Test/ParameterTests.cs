@@ -17,7 +17,7 @@ namespace jab.tests
         /// Operations using the "DELETE" verb should not accept form encoded data.
         /// </summary>
         /// <param name="operation"></param>
-        [Theory, ParameterisedClassData(typeof(ApiOperations), testDefinition)]
+        [Theory, ApiOperationsData(testDefinition)]
         public void DeleteMethodsShouldNotTakeFormEncodedData(
             IJabApiOperation operation)
         {
@@ -35,8 +35,9 @@ namespace jab.tests
         /// Use the "DELETE" verb for delete or removal operations.
         /// </summary>
         /// <param name="operation"></param>
-        [Theory, ParameterisedClassData(typeof(ApiOperations), testDefinition)]
-        public void UseDeleteVerbForDelete(IJabApiOperation operation)
+        [Theory, ApiOperationsData(testDefinition)]
+        public void UseDeleteVerbForDelete(
+            IJabApiOperation operation)
         {
             List<string> deleteSynonyms = new List<string>
             {
@@ -55,7 +56,7 @@ namespace jab.tests
         /// Similar to https://www.owasp.org/index.php/REST_Security_Cheat_Sheet#Authentication_and_session_management.
         /// </summary>
         /// <param name="operation"></param>
-        [Theory, ParameterisedClassData(typeof(ApiOperations), testDefinition)]
+        [Theory, ApiOperationsData(testDefinition)]
         public void NoSecretsInQueryParameters(IJabApiOperation operation)
         {
             List<string> secretSynonyms = new List<string>
