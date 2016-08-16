@@ -2,11 +2,13 @@
 
 namespace WebApi.Controllers
 {
+	[RoutePrefix("api/users")]
 	public class UsersController : ApiController
 	{
+		[Route("all")]
 		public IHttpActionResult GetAllUsers()
 		{
-			return Ok("hello");
+			return Ok("10 users");
 		}
 	}
 }
