@@ -15,7 +15,7 @@ namespace jab.tests
         /// Operations using the "DELETE" verb should not accept form encoded data.
         /// </summary>
         /// <param name="operation"></param>
-        [Theory, ParameterisedClassData(typeof(ApiOperations), testDefinition)]
+        [Theory, ApiOperationsData(testDefinition)]
         public void DeleteMethodsShouldNotTakeFormEncodedData(
             IJabApiOperation operation)
         {
@@ -33,7 +33,7 @@ namespace jab.tests
         /// Use the "DELETE" verb for delete or removal operations.
         /// </summary>
         /// <param name="operation"></param>
-        [Theory, ParameterisedClassData(typeof(ApiOperations), testDefinition)]
+        [Theory, ApiOperationsData(testDefinition)]
         public void UseDeleteVerbForDelete(
             IJabApiOperation operation)
         {
@@ -56,7 +56,7 @@ namespace jab.tests
         /// <param name="path"></param>
         /// <param name="method"></param>
         /// <param name="operation"></param>
-        [Theory, ParameterisedClassData(typeof(ApiOperations), testDefinition)]
+        [Theory, ApiOperationsData(testDefinition)]
         public void NoApiKeysInQueryParameters(
             IJabApiOperation operation)
         {
@@ -77,7 +77,7 @@ namespace jab.tests
         /// Do not include secrets in query parameters. These get logged or included in browser history.
         /// </summary>
         /// <param name="operation"></param>
-        [Theory, ParameterisedClassData(typeof(ApiOperations), testDefinition)]
+        [Theory, ApiOperationsData(testDefinition)]
         public void NoSecretsInQueryParameters(IJabApiOperation operation)
         {
             List<string> secretSynonyms = new List<string>
