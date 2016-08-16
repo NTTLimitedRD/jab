@@ -34,8 +34,7 @@ namespace jab.tests
         /// </summary>
         /// <param name="operation"></param>
         [Theory, ParameterisedClassData(typeof(ApiOperations), testDefinition)]
-        public void UseDeleteVerbForDelete(
-            IJabApiOperation operation)
+        public void UseDeleteVerbForDelete(IJabApiOperation operation)
         {
             List<string> deleteSynonyms = new List<string>
             {
@@ -67,7 +66,7 @@ namespace jab.tests
             Assert.False(
                 operation.Operation.ActualParameters.Any(
                     parameter => parameter.Kind == SwaggerParameterKind.Query
-                    && secretSynonyms.Any(term => operation.Path.IndexOf(term, 0, StringComparison.InvariantCultureIgnoreCase) != -1)),
+                    && secretSynonyms.Any(term => parameter.Name.IndexOf(term, 0, StringComparison.InvariantCultureIgnoreCase) != -1)),
                 $"{operation.Path} includes one or more secrets in query parameters");
         }
     }
