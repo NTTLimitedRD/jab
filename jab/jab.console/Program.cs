@@ -3,6 +3,7 @@ using System.Threading;
 using Xunit.Runners;
 using System.IO;
 using System.Reflection;
+using System.Reactive.Subjects;
 
 namespace jab.console
 {
@@ -10,7 +11,8 @@ namespace jab.console
     {
         // We use consoleLock because messages can arrive in parallel, so we want to make sure we get
         // consistent console output.
-        static object consoleLock = new object();
+        static Subject<string> output = new Subject<string>();
+        static Subject<string> errorOutput = new Subject<string>();
 
         // Use an event to know when we're done
         static ManualResetEvent finished = new ManualResetEvent(false);
@@ -39,6 +41,17 @@ namespace jab.console
             var testAssembly = "jab.dll";
             var typeName = typeof(jab.tests.ApiBestPracticeTestBase).Name;
 
+            output.Subscribe(msg => Console.WriteLine(msg));
+
+            errorOutput.Subscribe(errMsg =>
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+
+                Console.WriteLine(errMsg);
+
+                Console.ResetColor();
+            });
+
             using (var runner = AssemblyRunner.WithAppDomain(testAssembly))
             {
                 runner.OnDiscoveryComplete = OnDiscoveryComplete;
@@ -58,42 +71,28 @@ namespace jab.console
 
         static void OnDiscoveryComplete(DiscoveryCompleteInfo info)
         {
-            lock (consoleLock)
-                Console.WriteLine($"Running {info.TestCasesToRun} of {info.TestCasesDiscovered} tests...");
+            output.OnNext($"Running {info.TestCasesToRun} of {info.TestCasesDiscovered} tests...");
         }
 
         static void OnExecutionComplete(ExecutionCompleteInfo info)
         {
-            lock (consoleLock)
-                Console.WriteLine($"Finished: {info.TotalTests} tests in {Math.Round(info.ExecutionTime, 3)}s ({info.TestsFailed} failed, {info.TestsSkipped} skipped)");
+            output.OnNext($"Finished: {info.TotalTests} tests in {Math.Round(info.ExecutionTime, 3)}s ({info.TestsFailed} failed, {info.TestsSkipped} skipped)");
 
             finished.Set();
         }
 
         static void OnTestFailed(TestFailedInfo info)
-        {
-            lock (consoleLock)
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-
-                Console.WriteLine("[FAIL] {0}: {1}", info.TestDisplayName, info.ExceptionMessage);
-                if (info.ExceptionStackTrace != null)
-                    Console.WriteLine(info.ExceptionStackTrace);
-
-                Console.ResetColor();
-            }
+        {            
+            errorOutput.OnNext(String.Format("[FAIL] {0}: {1}", info.TestDisplayName, info.ExceptionMessage));
+            if (info.ExceptionStackTrace != null)
+                errorOutput.OnNext(info.ExceptionStackTrace);
 
             result = 1;
         }
 
         static void OnTestSkipped(TestSkippedInfo info)
         {
-            lock (consoleLock)
-            {
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine("[SKIP] {0}: {1}", info.TestDisplayName, info.SkipReason);
-                Console.ResetColor();
-            }
+            output.OnNext(String.Format("[SKIP] {0}: {1}", info.TestDisplayName, info.SkipReason));
         }
     }
 
