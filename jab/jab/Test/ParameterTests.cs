@@ -5,7 +5,7 @@ using Xunit;
 using System.Linq;
 using jab.Interfaces;
 
-namespace jab
+namespace jab.tests
 {
     public partial class ApiBestPracticeTestBase
     {

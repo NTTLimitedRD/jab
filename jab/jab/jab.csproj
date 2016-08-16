@@ -76,6 +76,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiServices.cs" />
+    <Compile Include="Attributes\ActiveTestAttribute.cs" />
     <Compile Include="Attributes\ApiOperationsDataAttribute.cs" />
     <Compile Include="Attributes\ParameterisedClassDataAttribute.cs" />
     <Compile Include="Http\HttpClientFactory.cs" />

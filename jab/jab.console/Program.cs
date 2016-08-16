@@ -36,7 +36,7 @@ namespace jab.console
             File.Copy(args[1], Path.Combine(fixturesPath, "swagger.json"), true);
 
             var testAssembly = "jab.dll";
-            var typeName = typeof(jab.ApiBestPracticeTestBase).Name;
+            var typeName = typeof(jab.tests.ApiBestPracticeTestBase).Name;
 
             using (var runner = AssemblyRunner.WithAppDomain(testAssembly))
             {

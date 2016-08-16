@@ -6,12 +6,10 @@ using System.Threading.Tasks;
 using NSwag;
 using Xunit;
 
-namespace jab.Test
+namespace jab.tests
 {
-    public partial class ServiceTests
+    public partial class ApiBestPracticeTestBase
     {
-        const string testDefinition = "samples/example.json";
-
         /// <summary>
         /// Require HTTPS support.
         /// </summary>

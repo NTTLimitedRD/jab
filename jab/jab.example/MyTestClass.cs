@@ -5,7 +5,7 @@ using System.Linq;
 namespace jab.example
 {
     public class MyTestClass
-        : ApiBestPracticeTestBase
+        : tests.ApiBestPracticeTestBase
     {
         /// <summary>
         /// DELETE operations should always contain a ID parameter.
