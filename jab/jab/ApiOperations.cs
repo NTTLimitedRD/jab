@@ -2,19 +2,20 @@
 using NSwag.Collections;
 using System.Collections.Generic;
 using System.Collections;
+using jab.Interfaces;
 
 namespace jab
 {
     /// <summary>
     /// An enumeration class for API definitions
     /// </summary>
-    public class ApiOperations: IEnumerable<object[]>
+    public class ApiOperations: IEnumerable<IJabApiOperation>
     {
         /// <summary>
         /// Enumerable operations (string path, SwaggerOperationMethod method, SwaggerOperation operation)
         /// for this API
         /// </summary>
-        private List<object[]> _operations;
+        private List<IJabApiOperation> _operations;
 
         /// <summary>
         /// Dictionary of operations available on this API
@@ -41,17 +42,17 @@ namespace jab
             _service = SwaggerLoader.LoadServiceFromFile(_swaggerFilePath);
             _paths = _service.Paths;
 
-            _operations = new List<object[]>();
+            _operations = new List<IJabApiOperation>();
 
             foreach(var path in _paths)
             {
                 foreach (var operation in path.Value)
                 {
-                    _operations.Add( new object[] {
-                        _service,
-                        path.Key,
-                        operation.Key,
-                        operation.Value
+                    _operations.Add( new JabApiOperation {
+                        Service = _service,
+                        Path = path.Key,
+                        Method = operation.Key,
+                        Operation = operation.Value
                     }
                     );
                 }
@@ -62,7 +63,7 @@ namespace jab
         /// Enumerate the API operations.
         /// </summary>
         /// <returns>Collection of possible operations (string path, SwaggerOperationMethod method, SwaggerOperation operation)</returns>
-        public IEnumerator<object[]> GetEnumerator()
+        public IEnumerator<IJabApiOperation> GetEnumerator()
         {
             return _operations.GetEnumerator();
         }
