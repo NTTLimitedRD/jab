@@ -8,14 +8,11 @@ namespace jab.tests
         /// <summary>
         /// Require HTTPS support.
         /// </summary>
-        /// <param name="service"></param>
-        /// <param name="path"></param>
-        /// <param name="method"></param>
-        /// <param name="operation"></param>
+        /// <param name="service">
+        /// The <see cref="SwaggerService"/> to test.
+        /// </param>
         [Theory, ParameterisedClassData(typeof(ApiServices), testDefinition)]
-        public void RequireHttps(
-            SwaggerService service
-        )
+        public void RequireHttps(SwaggerService service)
         {
             Assert.True(service.Schemes.Contains(SwaggerSchema.Https),
                 $"{service.BaseUrl} does not support HTTPS");
