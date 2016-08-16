@@ -1,24 +1,21 @@
-﻿using jab.Attributes;
-using NSwag;
+﻿using NSwag;
 using Xunit;
 using System.Linq;
+using jab.Interfaces;
 
 namespace jab
 {
-    public partial class TestExample
+    public partial class ApiBestPracticeTestBase
     {
         const string testDefinition = "samples/example.json";
 
         [Theory, ParameterisedClassData(typeof(ApiOperations), testDefinition)]
         public void DeleteMethodsShouldNotTakeFormEncodedData(
-            SwaggerService service,
-            string path, 
-            SwaggerOperationMethod method, 
-            SwaggerOperation operation)
+            IJabApiOperation operation)
         {
-            if (method == SwaggerOperationMethod.Delete)
+            if (operation.Method == SwaggerOperationMethod.Delete)
             {
-                Assert.Null(operation.ActualConsumes);
+                Assert.Null(operation.Operation.ActualConsumes);
             } else
             {
                 Assert.True(true);
@@ -34,16 +31,13 @@ namespace jab
         /// <param name="method"></param>
         /// <param name="operation"></param>
         [Theory, ParameterisedClassData(typeof(ApiOperations), testDefinition)]
-        public void NoApiKeysInParameters(
-            SwaggerService service,
-            string path,
-            SwaggerOperationMethod method,
-            SwaggerOperation operation)
+        public void NoApiKeysInQueryParameters(
+            IJabApiOperation operation)
         {
-            if (operation.ActualParameters.Count > 0)
+            if (operation.Operation.ActualParameters.Count > 0)
             {
                 Assert.False(
-                    operation.Parameters.Count(
+                    operation.Operation.Parameters.Count(
                         c => ((c.Name.ToLower() == "apikey") || (c.Name.ToLower() == "api_key")) 
                             && c.Kind == SwaggerParameterKind.Query) > 0);
             }
