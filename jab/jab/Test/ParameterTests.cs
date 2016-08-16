@@ -75,7 +75,7 @@ namespace jab.tests
             if (queryParametersContainingSecrets.Count > 0)
             {
                 throw new XunitException(
-                    $"{Path.Combine(operation.Service.BaseUrl, operation.Path)} passes secrets in the following query parameters '{(string.Join(", ", queryParametersContainingSecrets.Select(p => p.Name)))}'");
+                    $"{string.Concat(operation.Service.BaseUrl, operation.Path)} passes secrets in the following query parameters '{(string.Join(", ", queryParametersContainingSecrets.Select(p => p.Name)))}'");
             }
         }
 
@@ -95,9 +95,15 @@ namespace jab.tests
                 "application/json"
             };
 
-            Assert.False(
-                operation.Operation.ActualProduces.Any(product => !standardFormats.Contains(product)),
-                $"{operation.Path} uses nonstandard products");
+            IList<string> nonStandardFormats =
+                operation.Operation.ActualProduces.Where(product => !standardFormats.Contains(product)).ToList();
+
+            // TODO: Move this to a separate method.
+            if (nonStandardFormats.Count > 0)
+            {
+                throw new XunitException(
+                    $"{string.Concat(operation.Service.BaseUrl, operation.Path)} produces the nonstandard formats '{(string.Join(", ", nonStandardFormats))}'");
+            }
         }
 
         /// <summary>
@@ -116,16 +122,14 @@ namespace jab.tests
                 "application/json"
             };
 
-            IList<SwaggerParameter> nonStandardFormats =
-                new List<SwaggerParameter>(operation.Operation.ActualParameters.Where(
-                    parameter => parameter.Kind == SwaggerParameterKind.Query
-                                 && standardFormats.Any(term => parameter.Name.IndexOf(term, 0, StringComparison.InvariantCultureIgnoreCase) != -1)));
+            IList<string> nonStandardFormats =
+                operation.Operation.ActualConsumes.Where(product => !standardFormats.Contains(product)).ToList();
 
             // TODO: Move this to a separate method.
             if (nonStandardFormats.Count > 0)
             {
                 throw new XunitException(
-                    $"{Path.Combine(operation.Service.BaseUrl, operation.Path)} uses the nonstandard formats '{(string.Join(", ", nonStandardFormats.Select(p => p.Name)))}'");
+                    $"{string.Concat(operation.Service.BaseUrl, operation.Path)} consumes the nonstandard formats '{(string.Join(", ", nonStandardFormats))}'");
             }
         }
     }
