@@ -72,5 +72,26 @@ namespace jab.tests
                 Assert.True(true);
             }
         }
+
+        /// <summary>
+        /// Do not include secrets in query parameters. These get logged or included in browser history.
+        /// </summary>
+        /// <param name="operation"></param>
+        [Theory, ParameterisedClassData(typeof(ApiOperations), testDefinition)]
+        public void NoSecretsInQueryParameters(IJabApiOperation operation)
+        {
+            List<string> secretSynonyms = new List<string>
+            {
+                "password",
+                "secret",
+                "key"
+            };
+
+            Assert.False(
+                operation.Operation.ActualParameters.Any(
+                    parameter => parameter.Kind == SwaggerParameterKind.Query
+                    && secretSynonyms.Any(term => operation.Path.IndexOf(term, 0, StringComparison.InvariantCultureIgnoreCase) != -1)),
+                    $"{operation.Path} includes one or more secrets in query parameters");
+        }
     }
 }
