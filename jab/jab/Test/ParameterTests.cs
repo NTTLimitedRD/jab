@@ -68,7 +68,7 @@ namespace jab.tests
                 operation.Operation.ActualParameters.Any(
                     parameter => parameter.Kind == SwaggerParameterKind.Query
                     && secretSynonyms.Any(term => operation.Path.IndexOf(term, 0, StringComparison.InvariantCultureIgnoreCase) != -1)),
-                    $"{operation.Path} includes one or more secrets in query parameters");
+                $"{operation.Path} includes one or more secrets in query parameters");
         }
     }
 }
