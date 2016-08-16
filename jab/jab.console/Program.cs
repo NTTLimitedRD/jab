@@ -103,6 +103,4 @@ namespace jab.console
             return Path.GetDirectoryName(filePath);
         }
     }
-
 }
-

@@ -1,12 +1,12 @@
 ﻿using System;
+using Xunit;
+using Xunit.Sdk;
 
 namespace jab.Attributes
 {
     /// <summary>
     /// "Active test", requires a connection/instance to the actual API, does not just use Swagger.
     /// </summary>
-    [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
-    public class ActiveTheoryAttribute : System.Attribute
-    {
-    }
+    [XunitTestCaseDiscoverer("jab.Extensions.ActiveTheoryDiscoverer", "jab")]
+    public class ActiveTheoryAttribute : TheoryAttribute { }
 }
