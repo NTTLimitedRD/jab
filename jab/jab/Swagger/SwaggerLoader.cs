@@ -6,7 +6,7 @@ namespace jab
     {
         public static SwaggerService LoadServiceFromFile(string file)
         {
-            return SwaggerService.FromFile(file);
+            return SwaggerService.FromJson(file);
         }
     }
 }

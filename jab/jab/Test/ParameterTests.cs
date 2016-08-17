@@ -2,49 +2,49 @@
 using System.Collections.Generic;
 using System.IO;
 using NSwag;
-using Xunit;
+using NUnit.Framework;
 using System.Linq;
 using jab.Interfaces;
-using Xunit.Sdk;
 
 namespace jab.tests
 {
     public partial class ApiBestPracticeTestBase
     {
+        private const string FormEncodedFormat = "application/x-www-form-urlencoded";
+        private const string MultiPartFormFormat = "multipart/form-data";
+
         // Standard web service formats
         private static readonly List<string> StandardFormats = new List<string>
         {
-            "application/x-www-form-urlencoded",
+            FormEncodedFormat,
+            MultiPartFormFormat,
             "application/xml",
-            "application/json",
-            "multipart/form-data"
+            "application/json"
         };
 
         /// <summary>
         /// Operations using the "DELETE" verb should not accept form encoded data.
         /// </summary>
         /// <param name="operation"></param>
-        [Theory, ApiOperationsData(testDefinition)]
-        public void DeleteMethodsShouldNotTakeFormEncodedData(
-            IJabApiOperation operation)
+        [TestCaseSource(nameof(DeleteOperations))]
+        public void DeleteMethodsShouldNotTakeFormEncodedData(IJabApiOperation operation)
         {
-            if (operation.Method == SwaggerOperationMethod.Delete)
-            {
-                Assert.Null(operation.Operation.ActualConsumes);
-            }
-            else
-            {
-                Assert.True(true);
-            }
+            Assume.That(operation,
+                Has.Property("Method").EqualTo(SwaggerOperationMethod.Delete));
+            Assert.That(
+                operation.Operation,
+                Has.Property("Consumes").Null
+                    .Or.Property("Consumes").Not.Contains(FormEncodedFormat)
+                    .And.Property("Consumes").Not.Contains(MultiPartFormFormat),
+                $"{operation.Path} has 'DELETE' verb but accepts data");
         }
 
         /// <summary>
         /// Use the "DELETE" verb for delete or removal operations.
         /// </summary>
         /// <param name="operation"></param>
-        [Theory, ApiOperationsData(testDefinition)]
-        public void UseDeleteVerbForDelete(
-            IJabApiOperation operation)
+        [TestCaseSource(nameof(DeleteOperations))]
+        public void UseDeleteVerbForDelete(IJabApiOperation operation)
         {
             List<string> deleteSynonyms = new List<string>
             {
@@ -52,9 +52,12 @@ namespace jab.tests
                 "remove"
             };
 
-            Assert.False(operation.Method != SwaggerOperationMethod.Delete
-                && deleteSynonyms.Any(term => operation.Path.IndexOf(term, 0, StringComparison.InvariantCultureIgnoreCase) != -1),
-                $"{operation.Path} should use 'DELETE' verb instead of '{operation.Method}'");
+            Assume.That(operation,
+                Has.Property("Method").EqualTo(SwaggerOperationMethod.Delete));
+            Assert.That(
+                    operation,
+                    Has.Property("Path").Not.SubsetOf(deleteSynonyms),
+                    $"{operation.Path} should use 'DELETE' verb instead of '{operation.Method}'");
         }
 
         /// <summary>
@@ -63,7 +66,7 @@ namespace jab.tests
         /// Similar to https://www.owasp.org/index.php/REST_Security_Cheat_Sheet#Authentication_and_session_management.
         /// </summary>
         /// <param name="operation"></param>
-        [Theory, ApiOperationsData(testDefinition)]
+        [TestCaseSource(nameof(Operations))]
         public void NoSecretsInQueryParameters(IJabApiOperation operation)
         {
             List<string> secretSynonyms = new List<string>
@@ -78,48 +81,42 @@ namespace jab.tests
                     parameter => parameter.Kind == SwaggerParameterKind.Query
                                  && secretSynonyms.Any(term => parameter.Name.IndexOf(term, 0, StringComparison.InvariantCultureIgnoreCase) != -1)));
 
-            // TODO: Move this to a separate method.
-            if (queryParametersContainingSecrets.Count > 0)
-            {
-                throw new XunitException(
-                    $"{string.Concat(operation.Service.BaseUrl, operation.Path)} passes secrets in the following query parameters '{(string.Join(", ", queryParametersContainingSecrets.Select(p => p.Name)))}'");
-            }
+            Assert.That(
+                queryParametersContainingSecrets,
+                Is.Not.Null.And.Empty,
+                $"Parameters: {(string.Join(", ", queryParametersContainingSecrets.Select(p => p.Name)))}");
         }
 
         /// <summary>
         /// Do not include secrets in query parameters. These get logged or included in browser history.
         /// </summary>
         /// <param name="operation"></param>
-        [Theory, ParameterisedClassData(typeof(ApiOperations), testDefinition)]
+        [TestCaseSource(nameof(Operations))]
         public void NoNonStandardProductFormats(IJabApiOperation operation)
         {
             IList<string> nonStandardFormats =
                 operation.Operation?.Produces?.Where(product => !StandardFormats.Contains(product)).ToList();
 
-            // TODO: Move this to a separate method.
-            if (nonStandardFormats?.Count > 0)
-            {
-                throw new XunitException(
-                    $"{string.Concat(operation.Service.BaseUrl, operation.Path)} produces the nonstandard formats '{(string.Join(", ", nonStandardFormats))}'");
-            }
+            Assert.That(
+                nonStandardFormats,
+                Is.Null.Or.Empty,
+                $"Nonstandard formats: {(string.Join(", ", nonStandardFormats ?? new string[0]))}");
         }
 
         /// <summary>
         /// Do not include secrets in query parameters. These get logged or included in browser history.
         /// </summary>
         /// <param name="operation"></param>
-        [Theory, ParameterisedClassData(typeof(ApiOperations), testDefinition)]
+        [TestCaseSource(nameof(Operations))]
         public void NoNonStandardConsumptionFormats(IJabApiOperation operation)
         {
             IList<string> nonStandardFormats =
                 operation.Operation?.Consumes?.Where(consumption => !StandardFormats.Contains(consumption)).ToList();
 
-            // TODO: Move this to a separate method.
-            if (nonStandardFormats?.Count > 0)
-            {
-                throw new XunitException(
-                    $"{string.Concat(operation.Service.BaseUrl, operation.Path)} consumes the nonstandard formats '{(string.Join(", ", nonStandardFormats))}'");
-            }
+            Assert.That(
+                nonStandardFormats,
+                Is.Null.Or.Empty,
+                $"Nonstandard formats: {(string.Join(", ", nonStandardFormats ?? new string[0]))}");
         }
     }
 }

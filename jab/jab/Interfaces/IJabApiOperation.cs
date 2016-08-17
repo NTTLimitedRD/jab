@@ -4,9 +4,9 @@ namespace jab.Interfaces
 {
     public interface IJabApiOperation
     {
-        SwaggerService Service { get; set; }
-        string Path { get; set; }
-        SwaggerOperationMethod Method { get; set; }
-        SwaggerOperation Operation { get; set; }
+        SwaggerService Service { get; }
+        string Path { get; }
+        SwaggerOperationMethod Method { get; }
+        SwaggerOperation Operation { get; }
     }
 }

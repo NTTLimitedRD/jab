@@ -1,7 +1,5 @@
 ﻿using System.Linq;
 using Xunit.Abstractions;
-using Xunit.Sdk;
-
 namespace jab.Extensions
 {
 
