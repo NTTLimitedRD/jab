@@ -1,0 +1,22 @@
+version: 1.0.{build}
+configuration: Release
+platform: Any CPU
+environment:
+  MASTER_BUILD_VERSION: 1.0
+  BUILD_VERSION: 1.0
+  BUILD_VERSION_POSTFIX: feature
+  DEVELOP_BUILD_VERSION_POSTFIX: develop
+  MASTER_BUILD_VERSION_POSTFIX: none
+
+assembly_info:
+  patch: true
+  file: AssemblyInfo.*
+  assembly_version: "{version}"
+  assembly_file_version: "{version}"
+  assembly_informational_version: "{version}"
+before_build:
+    - nuget restore
+    - ps: jab\UpdateAssemblyInfo.AppVeyor.ps1
+build:
+  project: jab\jab.sln
+  publish_nuget: true
