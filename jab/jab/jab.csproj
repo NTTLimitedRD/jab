@@ -104,6 +104,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="jab.nuspec" />
     <None Include="packages.config" />
     <Content Include="fixtures\swagger.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

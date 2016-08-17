@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>jab</id>
+    <version>$version$</version>
+    <title>Jab</title>
+    <authors>Dimension Data</authors>
+    <projectUrl>https://github.com/DimensionDataCBUSydney/DimensionData.ComputeClient</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>An automated static testing tool for Swagger 2.0 REST API definitions, checking best practice security measures.</description>
+    <summary>An automated static testing tool for Swagger 2.0 REST API definitions.</summary>
+    <copyright>Copyright Dimension Data 2016</copyright>
+    <dependencies>
+      <group targetFramework=".NETFramework4.5">
+        <dependency id="Autofac" version="4.0.0" />
+        <dependency id="Microsoft.AspNet.WebApi.Client" version="5.2.3" />
+        <dependency id="Newtonsoft.Json" version="9.0.1" />
+        <dependency id="NJsonSchema" version="3.3.6061.16591" />
+        <dependency id="NSwag.Core" version="4.3.6065.35518"  />
+        <dependency id="xunit" version="2.1.0" />
+        <dependency id="xunit.abstractions" version="2.0.0" />
+        <dependency id="xunit.assert" version="2.1.0"  />
+        <dependency id="xunit.core" version="2.1.0" />
+        <dependency id="xunit.extensibility.core" version="2.1.0"  />
+        <dependency id="xunit.extensibility.execution" version="2.1.0" />
+        <dependency id="xunit.runner.visualstudio" version="2.1.0" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="bin\Release\jab.dll" target="lib\net45\jab.dll" />
+    <file src="bin\Release\jab.xml" target="lib\net45\jab.xml" />
+  </files>
+</package>
