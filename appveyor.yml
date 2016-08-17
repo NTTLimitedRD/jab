@@ -15,7 +15,7 @@ assembly_info:
   assembly_file_version: "{version}"
   assembly_informational_version: "{version}"
 before_build:
-    - nuget restore
+    - ps: cd jab; nuget restore
     - ps: jab\UpdateAssemblyInfo.AppVeyor.ps1
 build:
   project: jab\jab.sln
