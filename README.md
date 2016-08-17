@@ -1,6 +1,8 @@
 # jab
 REST API testing tool for security best practices.
 
+[![Build status](https://ci.appveyor.com/api/projects/status/hfwawoff5fl82i05?svg=true)](https://ci.appveyor.com/project/tonybaloney/jab)
+
 Jab works by inspecting a Swagger 2 definition and "testing" it using a series
 of assertions coded in xUnit.net.
 
@@ -8,7 +10,7 @@ Jab is designed to be used in a CI\CD process to inspect your REST API specifica
 give you information on the OWASP REST best-practice guide, for example:
 
 * Putting passwords in URLs as parameters
-* Putting API keys in query parameters instead of 
+* Putting API keys in query parameters instead of in POST payloads
 
 ![](http://i.giphy.com/nVYjOCNUrAeJi.gif)
 
