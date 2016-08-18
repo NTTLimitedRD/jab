@@ -1,5 +1,5 @@
 ﻿using jab.Interfaces;
-using Xunit;
+using NUnit.Framework;
 using System.Linq;
 using jab.Fixture;
 
@@ -16,13 +16,15 @@ namespace jab.example
         /// DELETE operations should always contain a ID parameter.
         /// </summary>
         /// <param name="apiOperation"></param>
-        [Theory, ApiOperationsData("fixtures/swagger.json")]
+        [TestCaseSource(nameof(DeleteOperations))]
         public void DeleteMethodsMustContainIdAsKeyParameter(IJabApiOperation apiOperation)
         {
-            if (apiOperation.Method == NSwag.SwaggerOperationMethod.Delete)
-            {
-                Assert.True(apiOperation.Operation.Parameters.Count(p => p.Name == "id") > 0);
-            }
+            Assume.That(apiOperation.Method,
+                Is.EqualTo(NSwag.SwaggerOperationMethod.Delete));
+            Assert.That(
+                apiOperation,
+                Has.Property("Parameters").Property("Parameters").None.Property("Name").EqualTo("id"),
+                    $"Must not pass ID parameter");
         }
     }
 }
