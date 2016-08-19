@@ -20,7 +20,7 @@ namespace jab.example
                 Is.EqualTo(NSwag.SwaggerOperationMethod.Delete));
             Assert.That(
                 apiOperation,
-                Has.Property("Parameters").Property("Parameters").None.Property("Name").EqualTo("id"),
+                Has.Property("Operation").Property("Parameters").None.Property("Name").EqualTo("id"),
                     "Must not pass ID parameter");
         }
     }
