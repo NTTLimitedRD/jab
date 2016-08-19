@@ -24,17 +24,17 @@ namespace jab.console
 
         static int Main(string[] args)
         {
-            //if (args.Length == 0 || args.Length > 2)
-            //{
-            //    Console.WriteLine("usage: jab.console.exe <path to swagger.json> [api url]");
-            //    return 2;
-            //}
+            if (args.Length == 0 || args.Length > 2)
+            {
+                Console.WriteLine("usage: jab.console.exe <path to swagger.json> [api url]");
+                return 2;
+            }
 
-            //if (args.Length > 1)
-            //{
-            //    Environment.SetEnvironmentVariable(Constants.active_tests_flag, "1", EnvironmentVariableTarget.Process);
-            //    Environment.SetEnvironmentVariable(Constants.base_url_env, args[1], EnvironmentVariableTarget.Process);
-            //}
+            if (args.Length > 1)
+            {
+                Environment.SetEnvironmentVariable(EnvironmentVariables.ActiveTestsFlag, "1", EnvironmentVariableTarget.Process);
+                Environment.SetEnvironmentVariable(EnvironmentVariables.BaseUrl, args[1], EnvironmentVariableTarget.Process);
+            }
 
             string thisPath = Assembly.GetExecutingAssembly().GetDirectoryPath();
             //string fixturesPath = Path.Combine(thisPath, "fixtures");

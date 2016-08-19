@@ -66,7 +66,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Constants.cs" />
+    <Compile Include="EnvironmentVariables.cs" />
     <Compile Include="Fixture\ApiTestFixture.cs" />
     <Compile Include="Http\HttpClientFactory.cs" />
     <Compile Include="Http\SwaggerServiceExtensions.cs" />

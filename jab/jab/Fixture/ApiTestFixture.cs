@@ -18,12 +18,12 @@ namespace jab.Fixture
             // Yuck.
             var envVar = Environment.GetEnvironmentVariables(EnvironmentVariableTarget.Process);
 
-            if (envVar.Contains(Constants.active_tests_flag))
+            if (envVar.Contains(EnvironmentVariables.ActiveTestsFlag))
             {
-                if (envVar.Contains(Constants.base_url_env)) {
+                if (envVar.Contains(EnvironmentVariables.BaseUrl)) {
                     containerBuilder
                         .Register<HttpClient>(
-                            client => JabHttpClientFactory.GetClient((string)envVar[Constants.base_url_env]))
+                            client => JabHttpClientFactory.GetClient((string)envVar[EnvironmentVariables.BaseUrl]))
                         .As<HttpClient>();
                 }
             }
