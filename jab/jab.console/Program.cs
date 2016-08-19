@@ -38,7 +38,7 @@ namespace jab.console
             commandLineOptions = new CommandLineOptions();
             if (!Parser.Default.ParseArguments(args, commandLineOptions))
             {
-                Console.Error.WriteLine("usage: jab.console.exe <path to swagger.json> [api url]");
+                Console.Error.WriteLine("usage: jab.console.exe <path to swagger.json> [-u <api url>]");
                 return ExitCodes.BadArgument;
             }
 

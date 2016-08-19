@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Autofac;
 using jab.Http;
 using jab.Interfaces;
+using NSwag;
 
 namespace jab
 {
@@ -17,26 +18,26 @@ namespace jab
     public class JabTestConfiguration: IJabTestConfiguration
     {
         /// <summary>
-        /// Create a new <see cref="JabConfiguration"/>.
+        /// Create a new <see cref="JabTestConfiguration"/>.
         /// </summary>
-        /// <param name="swaggerFile">
+        /// <param name="swaggerService">
         /// The Swagger file to use for the test. This cannot be null, empty or whitespace.
         /// </param>
         /// <param name="baseUrl">
         /// An optional base URL to test against.
         /// </param>
-        public JabTestConfiguration(string swaggerFile, Uri baseUrl)
+        public JabTestConfiguration(string swaggerService, Uri baseUrl)
         {
-            if (string.IsNullOrWhiteSpace(swaggerFile))
+            if (string.IsNullOrWhiteSpace(swaggerService))
             {
-                throw new ArgumentNullException(nameof(swaggerFile));
+                throw new ArgumentNullException(nameof(swaggerService));
             }
 
-            SwaggerFile = swaggerFile;
+            SwaggerService = SwaggerService.FromJson(swaggerService);
             BaseUrl = baseUrl;
         }
 
-        public string SwaggerFile { get; }
+        public SwaggerService SwaggerService { get; }
 
         public Uri BaseUrl { get; }
 
@@ -44,7 +45,7 @@ namespace jab
         /// Register components.
         /// </summary>
         /// <param name="containerBuilder">
-        /// The <see cref="ComponentBuilder"/> to use. This cannot be null.
+        /// The <see cref="ContainerBuilder"/> to use. This cannot be null.
         /// </param>
         /// <param name="swaggerFile">
         /// The contents of the swagger file. This cannot be null, empty or whitespace.

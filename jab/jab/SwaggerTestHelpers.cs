@@ -21,21 +21,18 @@ namespace jab
         /// <returns>Collection of possible operations (string path, SwaggerOperationMethod method, SwaggerOperation operation)</returns>
         public static IEnumerable<TestCaseData> GetOperations(IJabTestConfiguration configurationSource, Predicate<IJabApiOperation> predicate = null)
         {
-            SwaggerService swaggerService;
             IJabApiOperation jabApiOperation;
 
-            swaggerService = SwaggerService.FromJson(configurationSource.SwaggerFile);
-
-            foreach (KeyValuePair<string, SwaggerOperations> path in swaggerService.Paths)
+            foreach (KeyValuePair<string, SwaggerOperations> path in configurationSource.SwaggerService.Paths)
             {
                 foreach (KeyValuePair<SwaggerOperationMethod, SwaggerOperation> operation in path.Value)
                 {
-                    jabApiOperation = new JabApiOperation(swaggerService, path.Key, operation.Key, operation.Value);
+                    jabApiOperation = new JabApiOperation(configurationSource.SwaggerService, path.Key, operation.Key, operation.Value);
 
                     if (predicate == null || predicate(jabApiOperation))
                     {
                         yield return new TestCaseData(jabApiOperation)
-                            .SetName($"{operation.Key.ToString().ToUpper()} {swaggerService.BaseUrl}{path.Key}");
+                            .SetName($"{operation.Key.ToString().ToUpper()} {configurationSource.SwaggerService.BaseUrl}{path.Key}");
                     }
                 }
             }
@@ -47,12 +44,8 @@ namespace jab
         /// <returns>A collection enumerator</returns>
         public static IEnumerable<TestCaseData> GetServices(IJabTestConfiguration configurationSource)
         {
-            SwaggerService swaggerService;
-
-            swaggerService = SwaggerService.FromJson(configurationSource.SwaggerFile);
-
-            yield return new TestCaseData(swaggerService)
-                .SetName(swaggerService.BaseUrl);
+            yield return new TestCaseData(configurationSource.SwaggerService)
+                .SetName(configurationSource.SwaggerService.BaseUrl);
         }
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
+using NSwag;
 
 namespace jab.Interfaces
 {
@@ -15,7 +16,7 @@ namespace jab.Interfaces
         /// <summary>
         /// The contents of the swagger file to test.
         /// </summary>
-        string SwaggerFile { get;  }
+        SwaggerService SwaggerService { get;  }
 
         /// <summary>
         /// The Base URL of the web service to test or null, if 
