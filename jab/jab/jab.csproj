@@ -66,7 +66,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EnvironmentVariables.cs" />
     <Compile Include="Http\HttpClientFactory.cs" />
     <Compile Include="Http\SwaggerServiceExtensions.cs" />
     <Compile Include="Interfaces\IJabApiOperation.cs" />
