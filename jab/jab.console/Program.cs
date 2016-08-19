@@ -18,13 +18,17 @@ namespace jab.console
         /// <summary>
         /// The number of failed tests.
         /// </summary>
-        public static int FailedTestCount { get; set; }
+        public static uint FailedTestCount { get; set; }
 
         /// <summary>
         /// Entry point.
         /// </summary>
-        /// <param name="args"></param>
-        /// <returns></returns>
+        /// <param name="args">
+        /// Command line arguments.
+        /// </param>
+        /// <returns>
+        /// The process exit code.
+        /// </returns>
         public static int Main(string[] args)
         {
             //if (args.Length == 0 || args.Length > 2)
