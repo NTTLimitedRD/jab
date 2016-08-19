@@ -73,8 +73,10 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestEventListener.cs" />
+    <Compile Include="TestResult.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="SampleNUnitRests.xml" />
     <None Include="App.config" />
     <None Include="packages.config" />
     <Content Include="example.json">

@@ -76,8 +76,6 @@ namespace jab.console
                 }
             }
 
-            Console.ReadKey();
-
             return result;
         }
     }
