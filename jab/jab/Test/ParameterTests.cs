@@ -4,6 +4,7 @@ using System.IO;
 using NSwag;
 using NUnit.Framework;
 using System.Linq;
+using jab.Fixture;
 using jab.Interfaces;
 
 namespace jab.tests
@@ -36,7 +37,7 @@ namespace jab.tests
                 Has.Property("Consumes").Null
                     .Or.Property("Consumes").Not.Contains(FormEncodedFormat)
                     .And.Property("Consumes").Not.Contains(MultiPartFormFormat),
-                $"{operation.Path} has 'DELETE' verb but accepts data");
+                $"'DELETE' verb but accepts data");
         }
 
         /// <summary>
@@ -57,7 +58,7 @@ namespace jab.tests
             Assert.That(
                     operation,
                     Has.Property("Path").Not.SubsetOf(deleteSynonyms),
-                    $"{operation.Path} should use 'DELETE' verb instead of '{operation.Method}'");
+                    $"Should use 'DELETE' verb instead of '{operation.Method}'");
         }
 
         /// <summary>
