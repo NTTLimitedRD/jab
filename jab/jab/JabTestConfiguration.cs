@@ -11,10 +11,27 @@ using jab.Interfaces;
 
 namespace jab
 {
+    /// <summary>
+    /// Configuration for a Jab Test, allowing data to be passed on the command line or from other sources.
+    /// </summary>
     public class JabTestConfiguration: IJabTestConfiguration
     {
+        /// <summary>
+        /// Create a new <see cref="JabConfiguration"/>.
+        /// </summary>
+        /// <param name="swaggerFile">
+        /// The Swagger file to use for the test. This cannot be null, empty or whitespace.
+        /// </param>
+        /// <param name="baseUrl">
+        /// An optional base URL to test against.
+        /// </param>
         public JabTestConfiguration(string swaggerFile, Uri baseUrl)
         {
+            if (string.IsNullOrWhiteSpace(swaggerFile))
+            {
+                throw new ArgumentNullException(nameof(swaggerFile));
+            }
+
             SwaggerFile = swaggerFile;
             BaseUrl = baseUrl;
         }

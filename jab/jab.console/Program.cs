@@ -83,9 +83,15 @@ namespace jab.console
         /// <summary>
         /// Called after a test completes.
         /// </summary>
-        /// <param name="name"></param>
-        /// <param name="result"></param>
-        /// <param name="message"></param>
+        /// <param name="name">
+        /// The test name.
+        /// </param>
+        /// <param name="result">
+        /// Whether the test passed or failed.
+        /// </param>
+        /// <param name="message">
+        /// The message, usually only supplied when a test fails.
+        /// </param>
         private static void TestEventListener_OnTestCaseResult(string name, TestResult result, string message)
         {
             if(result == TestResult.Failed)
