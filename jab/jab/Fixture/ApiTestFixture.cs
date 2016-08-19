@@ -5,8 +5,7 @@ using jab.Http;
 
 namespace jab.Fixture
 {
-    public class ApiTestFixture
-        : IDisposable
+    public class ApiTestFixture: IDisposable
     {
         IContainer container;
 

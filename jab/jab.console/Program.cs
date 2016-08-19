@@ -7,6 +7,8 @@ using NUnit.Engine.Runners;
 using System.IO;
 using System.Reflection;
 using System.Reactive.Subjects;
+using Autofac;
+using jab.Fixture;
 
 namespace jab.console
 {
@@ -58,6 +60,7 @@ namespace jab.console
             testEventListener.OnTestCaseResult += TestEventListener_OnTestCaseResult;
             FailedTestCount = 0;
 
+            // using (new ApiTestFixture().CreateComponentContext())
             using (ITestEngine engine = TestEngineActivator.CreateInstance())
             using (ITestEngineRunner testRunner = new LocalTestRunner(engine.Services, new TestPackage("jab.dll")))
             {
