@@ -1,7 +1,6 @@
 ﻿using jab.Interfaces;
 using NUnit.Framework;
 using System.Linq;
-using jab.Fixture;
 
 namespace jab.example
 {
