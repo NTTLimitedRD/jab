@@ -1,11 +1,12 @@
 ﻿using jab.Interfaces;
 using NUnit.Framework;
 using System.Linq;
+using jab.tests;
 
 namespace jab.example
 {
     public class MyTestClass
-        : tests.ApiBestPracticeTestBase
+        : ApiBestPracticeTestBase
     {
         /// <summary>
         /// DELETE operations should always contain a ID parameter.
@@ -14,7 +15,8 @@ namespace jab.example
         [TestCaseSource(nameof(DeleteOperations))]
         public void DeleteMethodsMustContainIdAsKeyParameter(IJabApiOperation apiOperation)
         {
-            Assume.That(apiOperation.Method,
+            Assume.That(
+                apiOperation.Method,
                 Is.EqualTo(NSwag.SwaggerOperationMethod.Delete));
             Assert.That(
                 apiOperation,
