@@ -6,7 +6,6 @@ using NUnit.Common;
 using NUnit.Engine.Runners;
 using System.IO;
 using System.Reflection;
-using System.Reactive.Subjects;
 using Autofac;
 using Autofac.Core.Lifetime;
 using jab.Interfaces;
