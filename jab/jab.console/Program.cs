@@ -10,20 +10,22 @@ using System.Reactive.Subjects;
 
 namespace jab.console
 {
-    class Program
+    /// <summary>
+    /// Entry point.
+    /// </summary>
+    public class Program
     {
-        // We use consoleLock because messages can arrive in parallel, so we want to make sure we get
-        // consistent console output.
-        static Subject<string> output = new Subject<string>();
-        static Subject<string> errorOutput = new Subject<string>();
+        /// <summary>
+        /// The number of failed tests.
+        /// </summary>
+        public static int FailedTestCount { get; set; }
 
-        // Use an event to know when we're done
-        static ManualResetEvent finished = new ManualResetEvent(false);
-
-        // Start out assuming success; we'll set this to 1 if we get a failed test
-        static int result = 0;
-
-        static int Main(string[] args)
+        /// <summary>
+        /// Entry point.
+        /// </summary>
+        /// <param name="args"></param>
+        /// <returns></returns>
+        public static int Main(string[] args)
         {
             //if (args.Length == 0 || args.Length > 2)
             //{
@@ -46,24 +48,34 @@ namespace jab.console
             //// Copy the given fixture across
             //File.Copy(args[0], Path.Combine(fixturesPath, "swagger.json"), true);
 
+            TestEventListener testEventListener;
+
+            testEventListener = new TestEventListener();
+            testEventListener.OnTestCaseResult += TestEventListener_OnTestCaseResult;
+            FailedTestCount = 0;
+
             using (ITestEngine engine = TestEngineActivator.CreateInstance())
             using (ITestEngineRunner testRunner = new LocalTestRunner(engine.Services, new TestPackage("jab.dll")))
             {
-                TestEventListener testEventListener;
-
-                testEventListener = new TestEventListener();
                 testRunner.Run(testEventListener, TestFilter.Empty);
             }
 
-            return result;
+            return FailedTestCount > 0 ? ExitCodes.TestFailed : ExitCodes.Success;
         }
-    }
 
-    public static class AssemblyExtensions {
-        public static string GetDirectoryPath(this Assembly assembly)
+        /// <summary>
+        /// Called after a test completes.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="result"></param>
+        /// <param name="message"></param>
+        private static void TestEventListener_OnTestCaseResult(string name, TestResult result, string message)
         {
-            string filePath = new Uri(assembly.CodeBase).LocalPath;
-            return Path.GetDirectoryName(filePath);
+            if(result == TestResult.Failed)
+            {
+                Console.Out.WriteLine($"{name} {message ?? string.Empty}");
+                FailedTestCount++;
+            }
         }
     }
 }
