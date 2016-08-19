@@ -21,7 +21,7 @@ namespace jab.example
             Assert.That(
                 apiOperation,
                 Has.Property("Parameters").Property("Parameters").None.Property("Name").EqualTo("id"),
-                    $"Must not pass ID parameter");
+                    "Must not pass ID parameter");
         }
     }
 }
