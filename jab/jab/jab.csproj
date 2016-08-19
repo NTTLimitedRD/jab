@@ -72,7 +72,6 @@
     <Compile Include="Http\SwaggerServiceExtensions.cs" />
     <Compile Include="Interfaces\IJabApiOperation.cs" />
     <Compile Include="JabApiOperation.cs" />
-    <Compile Include="Swagger\SwaggerLoader.cs" />
     <Compile Include="SwaggerTestHelpers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Test\ActiveParameterTests.cs" />

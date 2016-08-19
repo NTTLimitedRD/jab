@@ -24,7 +24,7 @@ namespace jab
             SwaggerService swaggerService;
             IJabApiOperation jabApiOperation;
 
-            swaggerService = SwaggerLoader.LoadServiceFromFile(swaggerFilePath);
+            swaggerService = SwaggerService.FromJson(swaggerFilePath);
 
             foreach (KeyValuePair<string, SwaggerOperations> path in swaggerService.Paths)
             {
@@ -49,7 +49,7 @@ namespace jab
         {
             SwaggerService swaggerService;
 
-            swaggerService = SwaggerLoader.LoadServiceFromFile(swaggerFilePath);
+            swaggerService = SwaggerService.FromJson(swaggerFilePath);
 
             yield return new TestCaseData(swaggerService)
                 .SetName(swaggerService.BaseUrl);

@@ -3,6 +3,7 @@ using System.CodeDom;
 using System.Threading;
 using NUnit.Engine;
 using NUnit.Common;
+using NUnit.Engine.Runners;
 using System.IO;
 using System.Reflection;
 using System.Reactive.Subjects;
@@ -24,19 +25,18 @@ namespace jab.console
 
         static int Main(string[] args)
         {
-            if (args.Length == 0 || args.Length > 2)
-            {
-                Console.WriteLine("usage: jab.console.exe <path to swagger.json> [api url]");
-                return 2;
-            }
+            //if (args.Length == 0 || args.Length > 2)
+            //{
+            //    Console.WriteLine("usage: jab.console.exe <path to swagger.json> [api url]");
+            //    return 2;
+            //}
 
-            if (args.Length > 1)
-            {
-                Environment.SetEnvironmentVariable(EnvironmentVariables.ActiveTestsFlag, "1", EnvironmentVariableTarget.Process);
-                Environment.SetEnvironmentVariable(EnvironmentVariables.BaseUrl, args[1], EnvironmentVariableTarget.Process);
-            }
+            //if (args.Length > 1)
+            //{
+            //    Environment.SetEnvironmentVariable(EnvironmentVariables.ActiveTestsFlag, "1", EnvironmentVariableTarget.Process);
+            //    Environment.SetEnvironmentVariable(EnvironmentVariables.BaseUrl, args[1], EnvironmentVariableTarget.Process);
+            //}
 
-            string thisPath = Assembly.GetExecutingAssembly().GetDirectoryPath();
             //string fixturesPath = Path.Combine(thisPath, "fixtures");
 
             //// does the fixtures folder exist?
@@ -46,34 +46,13 @@ namespace jab.console
             //// Copy the given fixture across
             //File.Copy(args[0], Path.Combine(fixturesPath, "swagger.json"), true);
 
-            var testAssembly = Path.Combine(thisPath, "jab.dll");
-            var typeName = typeof(jab.tests.ApiBestPracticeTestBase).FullName;
-
-            output.Subscribe(msg => Console.WriteLine(msg));
-
-            errorOutput.Subscribe(errMsg =>
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-
-                Console.WriteLine(errMsg);
-
-                Console.ResetColor();
-            });
-
             using (ITestEngine engine = TestEngineActivator.CreateInstance())
-            using (ITestRunner testRunner = engine.GetRunner(new TestPackage("jab.dll")))
+            using (ITestEngineRunner testRunner = new LocalTestRunner(engine.Services, new TestPackage("jab.dll")))
             {
-                try
-                {
-                    TestEventListener testEventListener;
+                TestEventListener testEventListener;
 
-                    testEventListener = new TestEventListener();
-                    testRunner.Run(testEventListener, TestFilter.Empty);
-                }
-                finally
-                {
-                    testRunner.StopRun(true);
-                }
+                testEventListener = new TestEventListener();
+                testRunner.Run(testEventListener, TestFilter.Empty);
             }
 
             return result;
