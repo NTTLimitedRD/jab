@@ -23,7 +23,7 @@ namespace jab.tests
                     &&
                 operation.Method == SwaggerOperationMethod.Get)
             {
-                var client = this.Container.Resolve<HttpClient>();
+                var client = Container.Resolve<HttpClient>();
                 var parameter = operation.Operation.Parameters.First(p => p.Type == NJsonSchema.JsonObjectType.Integer && p.Kind == SwaggerParameterKind.Query);
                                   
                 var results = await client.GetAsync(operation.Path + "?" + parameter.Name + "=" + ulong.MaxValue.ToString());

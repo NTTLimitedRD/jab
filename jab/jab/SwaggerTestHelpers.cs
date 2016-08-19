@@ -19,12 +19,12 @@ namespace jab
         /// Enumerate the API operations.
         /// </summary>
         /// <returns>Collection of possible operations (string path, SwaggerOperationMethod method, SwaggerOperation operation)</returns>
-        public static IEnumerable<TestCaseData> GetOperations(string swaggerFilePath, Predicate<IJabApiOperation> predicate = null)
+        public static IEnumerable<TestCaseData> GetOperations(IJabTestConfiguration configurationSource, Predicate<IJabApiOperation> predicate = null)
         {
             SwaggerService swaggerService;
             IJabApiOperation jabApiOperation;
 
-            swaggerService = SwaggerService.FromJson(swaggerFilePath);
+            swaggerService = SwaggerService.FromJson(configurationSource.SwaggerFile);
 
             foreach (KeyValuePair<string, SwaggerOperations> path in swaggerService.Paths)
             {
@@ -45,11 +45,11 @@ namespace jab
         /// Enumerate the API operations.
         /// </summary>
         /// <returns>A collection enumerator</returns>
-        public static IEnumerable<TestCaseData> GetServices(string swaggerFilePath)
+        public static IEnumerable<TestCaseData> GetServices(IJabTestConfiguration configurationSource)
         {
             SwaggerService swaggerService;
 
-            swaggerService = SwaggerService.FromJson(swaggerFilePath);
+            swaggerService = SwaggerService.FromJson(configurationSource.SwaggerFile);
 
             yield return new TestCaseData(swaggerService)
                 .SetName(swaggerService.BaseUrl);

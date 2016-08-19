@@ -8,10 +8,6 @@ namespace jab.example
     public class MyTestClass
         : tests.ApiBestPracticeTestBase
     {
-        public MyTestClass(ApiTestFixture fixture) : base(fixture)
-        {
-        }
-
         /// <summary>
         /// DELETE operations should always contain a ID parameter.
         /// </summary>

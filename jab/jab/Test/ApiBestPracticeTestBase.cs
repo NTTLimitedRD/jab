@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using Autofac;
-using jab.Fixture;
 using jab.Interfaces;
 using NSwag;
 using NUnit.Framework;
@@ -13,39 +13,46 @@ namespace jab.tests
     public partial class ApiBestPracticeTestBase
     {
         /// <summary>
-        /// Static constructor.
+        /// Default constructor
         /// </summary>
         static ApiBestPracticeTestBase()
         {
-            // Load manually to circumvent Resharper test runner issues
+            ContainerBuilder containerBuilder;
+            string swaggerFile;
 
             using (Stream resourceStream = Assembly.GetExecutingAssembly().GetManifestResourceStream("jab.fixtures.swagger.json"))
             using (StreamReader stringReader = new StreamReader(resourceStream))
             {
-                TestDefinition = stringReader.ReadToEnd();
+                swaggerFile = stringReader.ReadToEnd();
             }
+
+            containerBuilder = new ContainerBuilder();
+            JabTestConfiguration.Register(containerBuilder, swaggerFile, null);
+
+            Container = containerBuilder.Build();
         }
 
         /// <summary>
-        /// Default constructor
+        /// Operations using the DELETE HTTP verb.
         /// </summary>
-        public ApiBestPracticeTestBase()
-        {
-            // Do nothing
-        }
+        protected static IEnumerable<TestCaseData> DeleteOperations => 
+            SwaggerTestHelpers.GetOperations(
+                Container.Resolve<IJabTestConfiguration>(), 
+                jabApiOperation => jabApiOperation.Method == SwaggerOperationMethod.Delete);
 
-        protected static IEnumerable<TestCaseData> DeleteOperations => SwaggerTestHelpers.GetOperations(TestDefinition, jabApiOperation => jabApiOperation.Method == SwaggerOperationMethod.Delete);
-        protected static IEnumerable<TestCaseData> Operations => SwaggerTestHelpers.GetOperations(TestDefinition);
-        protected static IEnumerable<TestCaseData> Services => SwaggerTestHelpers.GetServices(TestDefinition);
+        /// <summary>
+        /// Operations.
+        /// </summary>
+        protected static IEnumerable<TestCaseData> Operations => SwaggerTestHelpers.GetOperations(Container.Resolve<IJabTestConfiguration>());
 
-        protected static readonly string TestDefinition;
+        /// <summary>
+        /// Services.
+        /// </summary>
+        protected static IEnumerable<TestCaseData> Services => SwaggerTestHelpers.GetServices(Container.Resolve<IJabTestConfiguration>());
 
-        private ILifetimeScope Container { get; set; }
-
-        public ApiBestPracticeTestBase(ApiTestFixture fixture)
-        {
-            this.Container = fixture.CreateComponentContext();
-            Container.InjectUnsetProperties(this);
-        }
+        /// <summary>
+        /// The container used to pass configuration to the test class.
+        /// </summary>
+        public static ILifetimeScope Container { get; set; }
     }
 }

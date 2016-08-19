@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,7 +10,7 @@ namespace jab.Interfaces
     /// <summary>
     /// Configuration for running a test.
     /// </summary>
-    interface ITestConfigurationSource
+     public interface IJabTestConfiguration
     {
         /// <summary>
         /// The contents of the swagger file to test.

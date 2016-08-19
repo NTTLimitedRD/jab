@@ -8,7 +8,9 @@ using System.IO;
 using System.Reflection;
 using System.Reactive.Subjects;
 using Autofac;
-using jab.Fixture;
+using Autofac.Core.Lifetime;
+using jab.Interfaces;
+using jab.tests;
 
 namespace jab.console
 {
@@ -60,10 +62,18 @@ namespace jab.console
             testEventListener.OnTestCaseResult += TestEventListener_OnTestCaseResult;
             FailedTestCount = 0;
 
-            // using (new ApiTestFixture().CreateComponentContext())
+
+            ContainerBuilder containerBuilder;
+
+            containerBuilder = new ContainerBuilder();
+            //JabTestConfiguration.Build(containerBuilder, File.ReadAllText(args[0]), new Uri(args[1]));
+            JabTestConfiguration.Register(containerBuilder, File.ReadAllText("example.json"), null);
+
+            using (IContainer container = containerBuilder.Build())
             using (ITestEngine engine = TestEngineActivator.CreateInstance())
             using (ITestEngineRunner testRunner = new LocalTestRunner(engine.Services, new TestPackage("jab.dll")))
             {
+                ApiBestPracticeTestBase.Container = container;
                 testRunner.Run(testEventListener, TestFilter.Empty);
             }
 

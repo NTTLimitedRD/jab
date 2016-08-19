@@ -4,7 +4,6 @@ using System.IO;
 using NSwag;
 using NUnit.Framework;
 using System.Linq;
-using jab.Fixture;
 using jab.Interfaces;
 
 namespace jab.tests
