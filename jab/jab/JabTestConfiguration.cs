@@ -20,20 +20,20 @@ namespace jab
         /// <summary>
         /// Create a new <see cref="JabTestConfiguration"/>.
         /// </summary>
-        /// <param name="swaggerService">
+        /// <param name="swaggerJson">
         /// The Swagger file to use for the test. This cannot be null, empty or whitespace.
         /// </param>
         /// <param name="baseUrl">
         /// An optional base URL to test against.
         /// </param>
-        public JabTestConfiguration(string swaggerService, Uri baseUrl)
+        public JabTestConfiguration(string swaggerJson, Uri baseUrl)
         {
-            if (string.IsNullOrWhiteSpace(swaggerService))
+            if (string.IsNullOrWhiteSpace(swaggerJson))
             {
-                throw new ArgumentNullException(nameof(swaggerService));
+                throw new ArgumentException("Cannot be null, empty or whitespace", nameof(swaggerJson));
             }
 
-            SwaggerService = SwaggerService.FromJson(swaggerService);
+            SwaggerService = SwaggerService.FromJson(swaggerJson);
             BaseUrl = baseUrl;
         }
 
@@ -73,6 +73,9 @@ namespace jab
                     .Register(componentContext => JabHttpClientFactory.GetClient(baseUrl.ToString()))
                     .As<HttpClient>();
             }
+
+            // NOTE: It is not possible to unregister a class so this design assumes new ContainerBuilders
+            // are supplied each call.
         }
     }
 }
