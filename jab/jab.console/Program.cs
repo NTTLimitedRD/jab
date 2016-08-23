@@ -84,9 +84,9 @@ namespace jab.console
         public static int OnError(IEnumerable<Error> errors)
         {
             // Current formatting sucks
-            // Console.Error.WriteLine("usage: jab.console.exe <path to swagger.json> [-u <api url>]");
+            // Console.Error.WriteLine(errors.First().ToString());
 
-            Console.Error.WriteLine(errors.First().ToString());
+            Console.Error.WriteLine("usage: jab.console.exe <path to swagger.json> [-u <api url>]");
             return ExitCodes.BadArgument;
         }
 
@@ -104,10 +104,10 @@ namespace jab.console
         /// </param>
         private static void TestEventListener_OnTestCaseResult(string name, TestResult result, string message)
         {
-            if(result == TestResult.Failed)
+            if(message != null)
             {
-                Console.Out.WriteLine($"{name} {message ?? string.Empty}");
                 FailedTestCount++;
+                Console.Out.WriteLine($"{FailedTestCount:000}: {name} {message.Substring(0, message.IndexOf('\n'))}");
             }
         }
     }
