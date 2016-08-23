@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using jab.Interfaces;
+using jab.Http;
 using NSwag;
-using Autofac;
 using System.Net.Http;
 using System.Threading.Tasks;
 using NUnit.Framework;
@@ -23,10 +23,10 @@ namespace jab.tests
                     &&
                 operation.Method == SwaggerOperationMethod.Get)
             {
-                var client = Container.Resolve<HttpClient>();
-                var parameter = operation.Operation.Parameters.First(p => p.Type == NJsonSchema.JsonObjectType.Integer && p.Kind == SwaggerParameterKind.Query);
+                HttpClient client = Configuration.GetClient();
+                SwaggerParameter parameter = operation.Operation.Parameters.First(p => p.Type == NJsonSchema.JsonObjectType.Integer && p.Kind == SwaggerParameterKind.Query);
                                   
-                var results = await client.GetAsync(operation.Path + "?" + parameter.Name + "=" + ulong.MaxValue.ToString());
+                HttpResponseMessage results = await client.GetAsync(operation.Path + "?" + parameter.Name + "=" + ulong.MaxValue.ToString());
                 Assert.That(
                     results.StatusCode,
                     Is.EqualTo(System.Net.HttpStatusCode.InternalServerError));

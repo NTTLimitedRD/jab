@@ -1,12 +1,33 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.Net.Http;
+using jab.Interfaces;
 
 namespace jab.Http
 {
     public static class JabHttpClientFactory
     {
-        public static HttpClient GetClient(string baseUrl)
+
+        /// <summary>
+        /// Construct an <see cref="HttpClient"/> for the current <see cref="BaseUrl"/>, if any.
+        /// </summary>
+        /// <param name="configuration">
+        /// The <see cref="IJabApiOperation"/> to extract the configuration from. This cannot be null.
+        /// </param>
+        /// <returns>
+        /// An <see cref="HttpClient"/> initialized for the current <see cref="BaseUrl"/> or null,
+        /// if <see cref="BaseUrl"/> is null.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="configuration"/> cannot be null.
+        /// </exception>
+        public static HttpClient GetClient(this IJabTestConfiguration configuration)
         {
-            return new HttpClient() { BaseAddress = new System.Uri(baseUrl) };
+            if (configuration == null)
+            {
+                throw new ArgumentNullException(nameof(configuration));
+            }
+
+            return configuration.BaseUrl != null ? new HttpClient() { BaseAddress = configuration.BaseUrl } : null;
         }
     }
 }

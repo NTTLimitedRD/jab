@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using Autofac;
 using jab.Interfaces;
 using NSwag;
 using NUnit.Framework;
@@ -17,19 +16,15 @@ namespace jab.tests
         /// </summary>
         static ApiBestPracticeTestBase()
         {
-            ContainerBuilder containerBuilder;
             string swaggerFile;
 
-            using (Stream resourceStream = Assembly.GetExecutingAssembly().GetManifestResourceStream("jab.fixtures.swagger.json"))
+            using (Stream resourceStream = Assembly.GetExecutingAssembly().GetManifestResourceStream("jab.Fixtures.swagger.json"))
             using (StreamReader stringReader = new StreamReader(resourceStream))
             {
                 swaggerFile = stringReader.ReadToEnd();
             }
 
-            containerBuilder = new ContainerBuilder();
-            JabTestConfiguration.Register(containerBuilder, swaggerFile, null);
-
-            Container = containerBuilder.Build();
+            Configuration = new JabTestConfiguration(swaggerFile, null);
         }
 
         /// <summary>
@@ -37,22 +32,22 @@ namespace jab.tests
         /// </summary>
         protected static IEnumerable<TestCaseData> DeleteOperations => 
             SwaggerTestHelpers.GetOperations(
-                Container.Resolve<IJabTestConfiguration>(), 
+                Configuration, 
                 jabApiOperation => jabApiOperation.Method == SwaggerOperationMethod.Delete);
 
         /// <summary>
         /// Operations.
         /// </summary>
-        protected static IEnumerable<TestCaseData> Operations => SwaggerTestHelpers.GetOperations(Container.Resolve<IJabTestConfiguration>());
+        protected static IEnumerable<TestCaseData> Operations => SwaggerTestHelpers.GetOperations(Configuration);
 
         /// <summary>
         /// Services.
         /// </summary>
-        protected static IEnumerable<TestCaseData> Services => SwaggerTestHelpers.GetServices(Container.Resolve<IJabTestConfiguration>());
+        protected static IEnumerable<TestCaseData> Services => SwaggerTestHelpers.GetServices(Configuration);
 
         /// <summary>
         /// The container used to pass configuration to the test class.
         /// </summary>
-        public static ILifetimeScope Container { get; set; }
+        public static IJabTestConfiguration Configuration { get; set; }
     }
 }

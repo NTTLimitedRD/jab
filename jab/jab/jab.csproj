@@ -32,10 +32,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Autofac, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
-      <HintPath>..\packages\Autofac.4.0.0\lib\net451\Autofac.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
@@ -67,7 +63,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Http\HttpClientFactory.cs" />
-    <Compile Include="Http\SwaggerServiceExtensions.cs" />
     <Compile Include="Interfaces\IJabApiOperation.cs" />
     <Compile Include="Interfaces\IJabTestConfiguration.cs" />
     <Compile Include="JabApiOperation.cs" />
@@ -83,7 +78,7 @@
     <None Include="app.config" />
     <None Include="jab.nuspec" />
     <None Include="packages.config" />
-    <EmbeddedResource Include="fixtures\swagger.json">
+    <EmbeddedResource Include="Fixtures\swagger.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>

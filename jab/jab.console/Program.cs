@@ -4,7 +4,6 @@ using System.Threading;
 using NUnit.Engine;
 using NUnit.Engine.Runners;
 using System.IO;
-using Autofac;
 using CommandLine;
 using jab.tests;
 
@@ -33,7 +32,6 @@ namespace jab.console
         {
             CommandLineOptions commandLineOptions;
             TestEventListener testEventListener;
-            ContainerBuilder containerBuilder;
 
             commandLineOptions = new CommandLineOptions();
             if (!Parser.Default.ParseArguments(args, commandLineOptions))
@@ -48,17 +46,13 @@ namespace jab.console
             testEventListener.OnTestCaseResult += TestEventListener_OnTestCaseResult;
             FailedTestCount = 0;
 
-            containerBuilder = new ContainerBuilder();
             JabTestConfiguration.Register(
-                containerBuilder, 
                 File.ReadAllText(commandLineOptions.SwaggerFilePath),
                 commandLineOptions.BaseUrl != null ? new Uri(commandLineOptions.BaseUrl) : null);
 
-            using (IContainer container = containerBuilder.Build())
             using (ITestEngine engine = TestEngineActivator.CreateInstance())
             using (ITestEngineRunner testRunner = new LocalTestRunner(engine.Services, new TestPackage("jab.dll")))
             {
-                ApiBestPracticeTestBase.Container = container;
                 testRunner.Run(testEventListener, TestFilter.Empty);
             }
 
