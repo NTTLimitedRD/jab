@@ -1,9 +1,11 @@
 ﻿using System;
 using System.CodeDom;
+using System.Collections.Generic;
 using System.Threading;
 using NUnit.Engine;
 using NUnit.Engine.Runners;
 using System.IO;
+using System.Linq;
 using CommandLine;
 using jab.tests;
 
@@ -30,15 +32,30 @@ namespace jab.console
         /// </returns>
         public static int Main(string[] args)
         {
-            CommandLineOptions commandLineOptions;
-            TestEventListener testEventListener;
+            int result;
 
-            commandLineOptions = new CommandLineOptions();
-            if (!Parser.Default.ParseArguments(args, commandLineOptions))
+            try
             {
-                Console.Error.WriteLine("usage: jab.console.exe <path to swagger.json> [-u <api url>]");
-                return ExitCodes.BadArgument;
+                result =  Parser.Default.ParseArguments<CommandLineOptions>(args)
+                                .MapResult(OnRunTests, OnError);
             }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine(ex.Message);
+                result = ExitCodes.Unknown;
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Run the tests.
+        /// </summary>
+        /// <param name="commandLineOptions"></param>
+        /// <returns></returns>
+        public static int OnRunTests(CommandLineOptions commandLineOptions)
+        {
+            TestEventListener testEventListener;
 
             // TODO: Better command line error validation
 
@@ -57,6 +74,20 @@ namespace jab.console
             }
 
             return FailedTestCount > 0 ? ExitCodes.TestFailed : ExitCodes.Success;
+        }
+
+        /// <summary>
+        /// Called on command line parsing errors.
+        /// </summary>
+        /// <param name="errors"></param>
+        /// <returns></returns>
+        public static int OnError(IEnumerable<Error> errors)
+        {
+            // Current formatting sucks
+            // Console.Error.WriteLine("usage: jab.console.exe <path to swagger.json> [-u <api url>]");
+
+            Console.Error.WriteLine(errors.First().ToString());
+            return ExitCodes.BadArgument;
         }
 
         /// <summary>

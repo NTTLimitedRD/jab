@@ -9,10 +9,10 @@ namespace jab.console
 {
     public class CommandLineOptions
     {
-        [ValueOption(0)]
+        [Value(0, Required = true, HelpText = "Swagger file.", MetaValue = "<swagger_file.json>")]
         public string SwaggerFilePath { get; set; }
 
-        [Option('u', "baseUrl", DefaultValue = null, Required = false)]
+        [Option('u', "baseUrl", Required = false, HelpText = "Web API test URL.", MetaValue = "<url>")]
         public string BaseUrl { get; set; }
     }
 }

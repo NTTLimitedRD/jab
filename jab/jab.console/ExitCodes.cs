@@ -22,8 +22,13 @@ namespace jab.console
         public const int BadArgument = 1;
 
         /// <summary>
+        /// An unknown error occurred.
+        /// </summary>
+        public const int Unknown = 2;
+
+        /// <summary>
         /// One or more tests failed.
         /// </summary>
-        public const int TestFailed = 2;
+        public const int TestFailed = 3;
     }
 }
