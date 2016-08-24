@@ -11,6 +11,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "jab.console", "jab.console\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "jab.test", "jab.test\jab.test.csproj", "{E0292587-BF0E-47EA-A398-4AD987837E84}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A74F589F-51F5-4C50-98E6-17D87E577FC3}"
+	ProjectSection(SolutionItems) = preProject
+		UpdateAssemblyInfo.AppVeyor.ps1 = UpdateAssemblyInfo.AppVeyor.ps1
+		UpdateAssemblyInfo.ps1 = UpdateAssemblyInfo.ps1
+		UpdateAssemblyInfo.psm1 = UpdateAssemblyInfo.psm1
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
