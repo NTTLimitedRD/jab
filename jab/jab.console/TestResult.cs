@@ -11,7 +11,13 @@ namespace jab.console
     /// </summary>
     public enum TestResult
     {
+        /// <summary>
+        /// The test passed.
+        /// </summary>
         Passed,
+        /// <summary>
+        /// The test failed.
+        /// </summary>
         Failed
     }
 }
