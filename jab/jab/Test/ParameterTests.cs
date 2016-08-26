@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using jab.Interfaces;
+using Jab.Interfaces;
 using NSwag;
 using NUnit.Framework;
 
-namespace jab.Test
+namespace Jab.Test
 {
     public partial class ApiBestPracticeTestBase
     {

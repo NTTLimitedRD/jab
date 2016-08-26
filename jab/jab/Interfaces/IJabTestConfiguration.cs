@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using NSwag;
 
-namespace jab.Interfaces
+namespace Jab.Interfaces
 {
     /// <summary>
     /// Configuration for running a test.

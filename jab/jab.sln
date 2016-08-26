@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "jab", "jab\jab.csproj", "{83130D42-ACA4-451F-8783-BD69216E3BF9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jab", "jab\Jab.csproj", "{83130D42-ACA4-451F-8783-BD69216E3BF9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "jab.extend.example", "jab.example\jab.extend.example.csproj", "{83D6B088-C2E4-4128-8A1A-CEB89859EAEB}"
 EndProject

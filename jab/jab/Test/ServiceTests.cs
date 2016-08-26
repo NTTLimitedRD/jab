@@ -1,7 +1,7 @@
 ﻿using NSwag;
 using NUnit.Framework;
 
-namespace jab.Test
+namespace Jab.Test
 {
     public partial class ApiBestPracticeTestBase
     {

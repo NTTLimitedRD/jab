@@ -1,6 +1,6 @@
 ﻿using NSwag;
 
-namespace jab.Interfaces
+namespace Jab.Interfaces
 {
     /// <summary>
     /// A swagger operation (i.e. web method) called by jab.

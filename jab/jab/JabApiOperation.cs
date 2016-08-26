@@ -1,8 +1,8 @@
 ﻿using System.Security.Authentication.ExtendedProtection.Configuration;
-using jab.Interfaces;
+using Jab.Interfaces;
 using NSwag;
 
-namespace jab
+namespace Jab
 {
     /// <summary>
     /// A swagger operation (i.e. web method) called by jab.

@@ -3,13 +3,13 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using jab.Http;
-using jab.Interfaces;
+using Jab.Http;
+using Jab.Interfaces;
 using NJsonSchema;
 using NSwag;
 using NUnit.Framework;
 
-namespace jab.Test
+namespace Jab.Test
 {
     /// <summary>
     /// Base class for API tests.

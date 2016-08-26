@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Net.Http;
-using jab.Interfaces;
+using Jab.Interfaces;
 
-namespace jab.Http
+namespace Jab.Http
 {
     /// <summary>
     /// Extension methods for <see cref="JabTestConfiguration"/>.

@@ -5,11 +5,11 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using jab.Http;
-using jab.Interfaces;
+using Jab.Http;
+using Jab.Interfaces;
 using NSwag;
 
-namespace jab
+namespace Jab
 {
     /// <summary>
     /// Configuration for a Jab Test, allowing data to be passed on the command line or from other sources.

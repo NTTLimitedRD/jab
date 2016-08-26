@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using jab.Interfaces;
+using Jab.Interfaces;
 using NSwag;
 using NUnit.Framework;
 
-namespace jab.Test
+namespace Jab.Test
 {
     public partial class ApiBestPracticeTestBase
     {
@@ -17,7 +17,7 @@ namespace jab.Test
         {
             string swaggerFile;
 
-            using (Stream resourceStream = Assembly.GetExecutingAssembly().GetManifestResourceStream("jab.Fixtures.swagger.json"))
+            using (Stream resourceStream = Assembly.GetExecutingAssembly().GetManifestResourceStream("Jab.Fixtures.swagger.json"))
             using (StreamReader stringReader = new StreamReader(resourceStream))
             {
                 swaggerFile = stringReader.ReadToEnd();

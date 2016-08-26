@@ -7,7 +7,7 @@ using NUnit.Engine.Runners;
 using System.IO;
 using System.Linq;
 using CommandLine;
-using ApiBestPracticeTestBase = jab.Test.ApiBestPracticeTestBase;
+using ApiBestPracticeTestBase = Jab.Test.ApiBestPracticeTestBase;
 
 namespace jab.console
 {

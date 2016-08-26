@@ -5,10 +5,10 @@ using System.Collections.Generic;
 using System.Collections;
 using System.Linq;
 using System.Threading;
-using jab.Interfaces;
+using Jab.Interfaces;
 using NUnit.Framework;
 
-namespace jab
+namespace Jab
 {
     /// <summary>
     /// An enumeration class for API definitions
