@@ -65,7 +65,7 @@ namespace jab.Test
                 throw new ArgumentNullException(nameof(swaggerFile));
             }
 
-            Test.ApiBestPracticeTestBase.Configuration = new JabTestConfiguration(swaggerFile, baseUrl);
+            Configuration = new JabTestConfiguration(swaggerFile, baseUrl);
         }
     }
 }
