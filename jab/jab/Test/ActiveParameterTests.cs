@@ -20,7 +20,7 @@ namespace jab.Test
         /// For GET methods that have parameters which are integers. try sending a really big number.
         /// </summary>
         /// <param name="operation"></param>
-        [TestCaseSource(nameof(ApiBestPracticeTestBase.Operations), Category = "Active")]
+        [TestCaseSource(nameof(GetOperations), Category = "Active")]
         public async Task RangedIntegerParameterTesting(IJabApiOperation operation)
         {
             if (operation.Operation.ActualParameters.Any(
@@ -28,7 +28,7 @@ namespace jab.Test
                     &&
                 operation.Method == SwaggerOperationMethod.Get)
             {
-                HttpClient client = ApiBestPracticeTestBase.Configuration.GetClient();
+                HttpClient client = Configuration.GetClient();
                 SwaggerParameter parameter = operation.Operation.Parameters.First(p => p.Type == JsonObjectType.Integer && p.Kind == SwaggerParameterKind.Query);
                                   
                 HttpResponseMessage results = await client.GetAsync(operation.Path + "?" + parameter.Name + "=" + UInt64.MaxValue.ToString());

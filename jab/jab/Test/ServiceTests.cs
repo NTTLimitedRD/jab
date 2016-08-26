@@ -11,7 +11,7 @@ namespace jab.Test
         /// <param name="service">
         /// The <see cref="SwaggerService"/> to test.
         /// </param>
-        [TestCaseSource(nameof(ApiBestPracticeTestBase.Services))]
+        [TestCaseSource(nameof(Services))]
         public void RequireHttps(SwaggerService service)
         {
             Assert.That(

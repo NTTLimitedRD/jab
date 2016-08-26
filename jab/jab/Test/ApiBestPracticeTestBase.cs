@@ -27,6 +27,22 @@ namespace jab.Test
         }
 
         /// <summary>
+        /// Operations using the GET HTTP verb.
+        /// </summary>
+        protected static IEnumerable<TestCaseData> GetOperations =>
+            SwaggerTestHelpers.GetOperations(
+                Configuration,
+                jabApiOperation => jabApiOperation.Method == SwaggerOperationMethod.Get);
+
+        /// <summary>
+        /// Operations using the POST HTTP verb.
+        /// </summary>
+        protected static IEnumerable<TestCaseData> PostOperations =>
+            SwaggerTestHelpers.GetOperations(
+                Configuration,
+                jabApiOperation => jabApiOperation.Method == SwaggerOperationMethod.Post);
+
+        /// <summary>
         /// Operations using the DELETE HTTP verb.
         /// </summary>
         protected static IEnumerable<TestCaseData> DeleteOperations => 
