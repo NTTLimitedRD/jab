@@ -78,7 +78,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="jab.nuspec" />
+    <None Include="Jab.nuspec" />
     <None Include="packages.config" />
     <EmbeddedResource Include="Fixtures\swagger.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
