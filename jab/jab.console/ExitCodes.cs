@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace jab.console
+namespace Jab.Console
 {
     /// <summary>
     /// Return codes.

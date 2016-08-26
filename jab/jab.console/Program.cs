@@ -9,7 +9,7 @@ using System.Linq;
 using CommandLine;
 using ApiBestPracticeTestBase = Jab.Test.ApiBestPracticeTestBase;
 
-namespace jab.console
+namespace Jab.Console
 {
     /// <summary>
     /// Entry point.
@@ -41,7 +41,7 @@ namespace jab.console
             }
             catch (Exception ex)
             {
-                Console.Error.WriteLine(ex.Message);
+                System.Console.Error.WriteLine(ex.Message);
                 result = ExitCodes.Unknown;
             }
 
@@ -56,8 +56,6 @@ namespace jab.console
         public static int OnRunTests(CommandLineOptions commandLineOptions)
         {
             TestEventListener testEventListener;
-
-            // TODO: Better command line error validation
 
             testEventListener = new TestEventListener();
             testEventListener.OnTestCaseResult += TestEventListener_OnTestCaseResult;
@@ -86,7 +84,7 @@ namespace jab.console
             // Current formatting sucks
             // Console.Error.WriteLine(errors.First().ToString());
 
-            Console.Error.WriteLine("usage: jab.console.exe <path to swagger.json> [-u <api url>]");
+            System.Console.Error.WriteLine("usage: jab.console.exe <path to swagger.json> [-u <api url>]");
             return ExitCodes.BadArgument;
         }
 
@@ -107,7 +105,7 @@ namespace jab.console
             if(message != null)
             {
                 FailedTestCount++;
-                Console.Out.WriteLine($"{FailedTestCount:000}: {name} {message.Substring(0, message.IndexOf('\n'))}");
+                System.Console.Out.WriteLine($"{FailedTestCount:000}: {name} {message.Substring(0, message.IndexOf('\n'))}");
             }
         }
     }
