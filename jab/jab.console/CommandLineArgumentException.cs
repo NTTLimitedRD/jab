@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace jab.console
+namespace Jab.Console
 {
     /// <summary>
     /// Thrown for an invalid command line argument.

@@ -1,35 +1,40 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.Linq;
-using jab.Interfaces;
-using jab.Http;
-using NSwag;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Jab.Http;
+using Jab.Interfaces;
+using NJsonSchema;
+using NSwag;
 using NUnit.Framework;
 
-namespace jab.tests
+namespace Jab.Test
 {
+    /// <summary>
+    /// Base class for API tests.
+    /// </summary>
     public partial class ApiBestPracticeTestBase
     {
         /// <summary>
         /// For GET methods that have parameters which are integers. try sending a really big number.
         /// </summary>
         /// <param name="operation"></param>
-        [TestCaseSource(nameof(Operations), Category = "Active")]
+        [TestCaseSource(nameof(GetOperations), Category = "Active")]
         public async Task RangedIntegerParameterTesting(IJabApiOperation operation)
         {
             if (operation.Operation.ActualParameters.Any(
-                    parameter => parameter.Kind == SwaggerParameterKind.Query && parameter.Type == NJsonSchema.JsonObjectType.Integer)
+                    parameter => parameter.Kind == SwaggerParameterKind.Query && parameter.Type == JsonObjectType.Integer)
                     &&
                 operation.Method == SwaggerOperationMethod.Get)
             {
                 HttpClient client = Configuration.GetClient();
-                SwaggerParameter parameter = operation.Operation.Parameters.First(p => p.Type == NJsonSchema.JsonObjectType.Integer && p.Kind == SwaggerParameterKind.Query);
+                SwaggerParameter parameter = operation.Operation.Parameters.First(p => p.Type == JsonObjectType.Integer && p.Kind == SwaggerParameterKind.Query);
                                   
-                HttpResponseMessage results = await client.GetAsync(operation.Path + "?" + parameter.Name + "=" + ulong.MaxValue.ToString());
+                HttpResponseMessage results = await client.GetAsync(operation.Path + "?" + parameter.Name + "=" + UInt64.MaxValue.ToString());
                 Assert.That(
                     results.StatusCode,
-                    Is.EqualTo(System.Net.HttpStatusCode.InternalServerError));
+                    Is.EqualTo(HttpStatusCode.InternalServerError));
             }
         }
     }

@@ -7,9 +7,9 @@ using NUnit.Engine.Runners;
 using System.IO;
 using System.Linq;
 using CommandLine;
-using jab.tests;
+using ApiBestPracticeTestBase = Jab.Test.ApiBestPracticeTestBase;
 
-namespace jab.console
+namespace Jab.Console
 {
     /// <summary>
     /// Entry point.
@@ -41,12 +41,12 @@ namespace jab.console
             }
             catch (CommandLineArgumentException ex)
             {
-                Console.Error.WriteLine(ex.Message);
+                System.Console.Error.WriteLine(ex.Message);
                 result = ExitCodes.BadArgument;
             }
             catch (Exception ex)
             {
-                Console.Error.WriteLine(ex.Message);
+                System.Console.Error.WriteLine(ex.Message);
                 result = ExitCodes.Unknown;
             }
 
@@ -67,7 +67,7 @@ namespace jab.console
 
             try
             {
-                JabTestConfiguration.Register(
+                ApiBestPracticeTestBase.Register(
                     File.ReadAllText(commandLineOptions.SwaggerFilePath),
                     commandLineOptions.BaseUrl != null ? new Uri(commandLineOptions.BaseUrl) : null);
             }
@@ -90,6 +90,10 @@ namespace jab.console
             testEventListener = new TestEventListener();
             testEventListener.OnTestCaseResult += TestEventListener_OnTestCaseResult;
             FailedTestCount = 0;
+
+            ApiBestPracticeTestBase.Register(
+                File.ReadAllText(commandLineOptions.SwaggerFilePath),
+                commandLineOptions.BaseUrl != null ? new Uri(commandLineOptions.BaseUrl) : null);
 
             using (ITestEngine engine = TestEngineActivator.CreateInstance())
             using (ITestEngineRunner testRunner = new LocalTestRunner(engine.Services, new TestPackage("jab.dll")))
@@ -127,7 +131,7 @@ namespace jab.console
             if(message != null)
             {
                 FailedTestCount++;
-                Console.Out.WriteLine($"{FailedTestCount:000}: {name} {message.Substring(0, message.IndexOf('\n'))}");
+                System.Console.Out.WriteLine($"{FailedTestCount:000}: {name} {message.Substring(0, message.IndexOf('\n'))}");
             }
         }
     }

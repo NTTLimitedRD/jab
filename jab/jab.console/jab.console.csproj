@@ -7,8 +7,8 @@
     <ProjectGuid>{8FCC7BCD-0C6B-459E-9870-26DBF33E88ED}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>jab.console</RootNamespace>
-    <AssemblyName>jab.console</AssemblyName>
+    <RootNamespace>Jab.Console</RootNamespace>
+    <AssemblyName>Jab.Console</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -73,9 +73,9 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\jab\jab.csproj">
+    <ProjectReference Include="..\jab\Jab.csproj">
       <Project>{83130d42-aca4-451f-8783-bd69216e3bf9}</Project>
-      <Name>jab</Name>
+      <Name>Jab</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

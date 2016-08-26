@@ -5,12 +5,11 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using jab.Http;
-using jab.Interfaces;
-using jab.tests;
+using Jab.Http;
+using Jab.Interfaces;
 using NSwag;
 
-namespace jab
+namespace Jab
 {
     /// <summary>
     /// Configuration for a Jab Test, allowing data to be passed on the command line or from other sources.
@@ -37,30 +36,14 @@ namespace jab
             BaseUrl = baseUrl;
         }
 
+        /// <summary>
+        /// The <see cref="SwaggerService"/> used for testing.
+        /// </summary>
         public SwaggerService SwaggerService { get; }
 
-        public Uri BaseUrl { get; }
-
         /// <summary>
-        /// Register components.
+        /// The optional URL of the web service to test.
         /// </summary>
-        /// <param name="containerBuilder">
-        /// The <see cref="ContainerBuilder"/> to use. This cannot be null.
-        /// </param>
-        /// <param name="swaggerFile">
-        /// The contents of the swagger file. This cannot be null, empty or whitespace.
-        /// </param>
-        /// <param name="baseUrl">
-        /// The optional base URL to use for testing the web service.
-        /// </param>
-        public static void Register(string swaggerFile, Uri baseUrl = null)
-        {
-            if (string.IsNullOrWhiteSpace(swaggerFile))
-            {
-                throw new ArgumentNullException(nameof(swaggerFile));
-            }
-
-            ApiBestPracticeTestBase.Configuration = new JabTestConfiguration(swaggerFile, baseUrl);
-        }
+        public Uri BaseUrl { get; }
     }
 }

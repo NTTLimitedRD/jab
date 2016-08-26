@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace jab.console
+namespace Jab.Console
 {
     /// <summary>
     /// Test result.
@@ -12,11 +12,12 @@ namespace jab.console
     public enum TestResult
     {
         /// <summary>
-        /// The test passed.
+        /// Passed.
         /// </summary>
         Passed,
+
         /// <summary>
-        /// The test failed.
+        /// Failed
         /// </summary>
         Failed
     }

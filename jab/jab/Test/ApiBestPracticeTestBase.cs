@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using jab.Interfaces;
+using Jab.Interfaces;
 using NSwag;
 using NUnit.Framework;
 
-namespace jab.tests
+namespace Jab.Test
 {
     public partial class ApiBestPracticeTestBase
     {
@@ -18,7 +17,7 @@ namespace jab.tests
         {
             string swaggerFile;
 
-            using (Stream resourceStream = Assembly.GetExecutingAssembly().GetManifestResourceStream("jab.Fixtures.swagger.json"))
+            using (Stream resourceStream = Assembly.GetExecutingAssembly().GetManifestResourceStream("Jab.Fixtures.swagger.json"))
             using (StreamReader stringReader = new StreamReader(resourceStream))
             {
                 swaggerFile = stringReader.ReadToEnd();
@@ -26,6 +25,22 @@ namespace jab.tests
 
             Configuration = new JabTestConfiguration(swaggerFile, null);
         }
+
+        /// <summary>
+        /// Operations using the GET HTTP verb.
+        /// </summary>
+        protected static IEnumerable<TestCaseData> GetOperations =>
+            SwaggerTestHelpers.GetOperations(
+                Configuration,
+                jabApiOperation => jabApiOperation.Method == SwaggerOperationMethod.Get);
+
+        /// <summary>
+        /// Operations using the POST HTTP verb.
+        /// </summary>
+        protected static IEnumerable<TestCaseData> PostOperations =>
+            SwaggerTestHelpers.GetOperations(
+                Configuration,
+                jabApiOperation => jabApiOperation.Method == SwaggerOperationMethod.Post);
 
         /// <summary>
         /// Operations using the DELETE HTTP verb.
@@ -49,5 +64,24 @@ namespace jab.tests
         /// The container used to pass configuration to the test class.
         /// </summary>
         public static IJabTestConfiguration Configuration { get; set; }
+
+        /// <summary>
+        /// Register components.
+        /// </summary>
+        /// <param name="swaggerFile">
+        /// The contents of the swagger file. This cannot be null, empty or whitespace.
+        /// </param>
+        /// <param name="baseUrl">
+        /// The optional base URL to use for testing the web service.
+        /// </param>
+        public static void Register(string swaggerFile, Uri baseUrl = null)
+        {
+            if (string.IsNullOrWhiteSpace(swaggerFile))
+            {
+                throw new ArgumentNullException(nameof(swaggerFile));
+            }
+
+            Configuration = new JabTestConfiguration(swaggerFile, baseUrl);
+        }
     }
 }

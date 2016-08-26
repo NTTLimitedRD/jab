@@ -8,7 +8,7 @@ using System.Xml.Linq;
 using System.Xml.XPath;
 using NUnit.Engine;
 
-namespace jab.console
+namespace Jab.Console
 {
     /// <summary>
     /// Called after a test case has executed.
