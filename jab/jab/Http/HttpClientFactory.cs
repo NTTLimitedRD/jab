@@ -9,6 +9,7 @@ namespace Jab.Http
     /// </summary>
     public static class JabHttpClientFactory
     {
+        // TODO: How do we mock this? Should we make it a non extension method and do it the old fashioned way?
 
         /// <summary>
         /// Construct an <see cref="HttpClient"/> for the current <see cref="IJabTestConfiguration.BaseUrl"/>, if any.
