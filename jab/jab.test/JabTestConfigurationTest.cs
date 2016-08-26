@@ -1,7 +1,7 @@
 ﻿using System;
 using NUnit.Framework;
 
-namespace Jab.test
+namespace Jab.Test
 {
     [TestFixture]
     public class JabTestConfigurationTest

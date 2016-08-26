@@ -6,8 +6,8 @@
     <ProjectGuid>{E0292587-BF0E-47EA-A398-4AD987837E84}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>jab.test</RootNamespace>
-    <AssemblyName>jab.test</AssemblyName>
+    <RootNamespace>Jab.Test</RootNamespace>
+    <AssemblyName>Jab.Test</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>

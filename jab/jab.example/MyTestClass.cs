@@ -1,9 +1,9 @@
-﻿using jab.Interfaces;
+﻿using System.Linq;
 using NUnit.Framework;
-using System.Linq;
-using jab.tests;
+using Jab.Interfaces;
+using Jab.Test;
 
-namespace jab.example
+namespace Jab.Example
 {
     public class MyTestClass
         : ApiBestPracticeTestBase

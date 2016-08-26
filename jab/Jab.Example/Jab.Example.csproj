@@ -7,10 +7,11 @@
     <ProjectGuid>{83D6B088-C2E4-4128-8A1A-CEB89859EAEB}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>jab.example</RootNamespace>
-    <AssemblyName>jab.example</AssemblyName>
+    <RootNamespace>Jab.Example</RootNamespace>
+    <AssemblyName>Jab.Example</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
