@@ -7,7 +7,7 @@ using NUnit.Engine.Runners;
 using System.IO;
 using System.Linq;
 using CommandLine;
-using jab.tests;
+using ApiBestPracticeTestBase = jab.Test.ApiBestPracticeTestBase;
 
 namespace jab.console
 {
@@ -63,7 +63,7 @@ namespace jab.console
             testEventListener.OnTestCaseResult += TestEventListener_OnTestCaseResult;
             FailedTestCount = 0;
 
-            JabTestConfiguration.Register(
+            ApiBestPracticeTestBase.Register(
                 File.ReadAllText(commandLineOptions.SwaggerFilePath),
                 commandLineOptions.BaseUrl != null ? new Uri(commandLineOptions.BaseUrl) : null);
 

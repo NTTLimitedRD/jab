@@ -7,7 +7,6 @@ using System.Text;
 using System.Threading.Tasks;
 using jab.Http;
 using jab.Interfaces;
-using jab.tests;
 using NSwag;
 
 namespace jab
@@ -46,24 +45,5 @@ namespace jab
         /// The optional URL of the web service to test.
         /// </summary>
         public Uri BaseUrl { get; }
-
-        /// <summary>
-        /// Register components.
-        /// </summary>
-        /// <param name="swaggerFile">
-        /// The contents of the swagger file. This cannot be null, empty or whitespace.
-        /// </param>
-        /// <param name="baseUrl">
-        /// The optional base URL to use for testing the web service.
-        /// </param>
-        public static void Register(string swaggerFile, Uri baseUrl = null)
-        {
-            if (string.IsNullOrWhiteSpace(swaggerFile))
-            {
-                throw new ArgumentNullException(nameof(swaggerFile));
-            }
-
-            ApiBestPracticeTestBase.Configuration = new JabTestConfiguration(swaggerFile, baseUrl);
-        }
     }
 }

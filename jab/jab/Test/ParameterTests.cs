@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using NSwag;
-using NUnit.Framework;
 using System.Linq;
 using jab.Interfaces;
+using NSwag;
+using NUnit.Framework;
 
-namespace jab.tests
+namespace jab.Test
 {
     public partial class ApiBestPracticeTestBase
     {
@@ -26,7 +25,7 @@ namespace jab.tests
         /// Operations using the "DELETE" verb should not accept form encoded data.
         /// </summary>
         /// <param name="operation"></param>
-        [TestCaseSource(nameof(DeleteOperations))]
+        [TestCaseSource(nameof(ApiBestPracticeTestBase.DeleteOperations))]
         public void DeleteMethodsShouldNotTakeFormEncodedData(IJabApiOperation operation)
         {
             Assume.That(operation,
@@ -43,7 +42,7 @@ namespace jab.tests
         /// Use the "DELETE" verb for delete or removal operations.
         /// </summary>
         /// <param name="operation"></param>
-        [TestCaseSource(nameof(DeleteOperations))]
+        [TestCaseSource(nameof(ApiBestPracticeTestBase.DeleteOperations))]
         public void UseDeleteVerbForDelete(IJabApiOperation operation)
         {
             List<string> deleteSynonyms = new List<string>
@@ -66,7 +65,7 @@ namespace jab.tests
         /// Similar to https://www.owasp.org/index.php/REST_Security_Cheat_Sheet#Authentication_and_session_management.
         /// </summary>
         /// <param name="operation"></param>
-        [TestCaseSource(nameof(Operations))]
+        [TestCaseSource(nameof(ApiBestPracticeTestBase.Operations))]
         public void NoSecretsInQueryParameters(IJabApiOperation operation)
         {
             List<string> secretSynonyms = new List<string>
@@ -84,14 +83,14 @@ namespace jab.tests
             Assert.That(
                 queryParametersContainingSecrets,
                 Is.Not.Null.And.Empty,
-                $"Parameters: {(string.Join(", ", queryParametersContainingSecrets.Select(p => p.Name)))}");
+                $"Parameters: {(String.Join(", ", queryParametersContainingSecrets.Select(p => p.Name)))}");
         }
 
         /// <summary>
         /// Do not include secrets in query parameters. These get logged or included in browser history.
         /// </summary>
         /// <param name="operation"></param>
-        [TestCaseSource(nameof(Operations))]
+        [TestCaseSource(nameof(ApiBestPracticeTestBase.Operations))]
         public void NoNonStandardProductFormats(IJabApiOperation operation)
         {
             IList<string> nonStandardFormats =
@@ -100,14 +99,14 @@ namespace jab.tests
             Assert.That(
                 nonStandardFormats,
                 Is.Null.Or.Empty,
-                $"Nonstandard formats: {(string.Join(", ", nonStandardFormats ?? new string[0]))}");
+                $"Nonstandard formats: {(String.Join(", ", nonStandardFormats ?? new string[0]))}");
         }
 
         /// <summary>
         /// Do not include secrets in query parameters. These get logged or included in browser history.
         /// </summary>
         /// <param name="operation"></param>
-        [TestCaseSource(nameof(Operations))]
+        [TestCaseSource(nameof(ApiBestPracticeTestBase.Operations))]
         public void NoNonStandardConsumptionFormats(IJabApiOperation operation)
         {
             IList<string> nonStandardFormats =
@@ -116,7 +115,7 @@ namespace jab.tests
             Assert.That(
                 nonStandardFormats,
                 Is.Null.Or.Empty,
-                $"Nonstandard formats: {(string.Join(", ", nonStandardFormats ?? new string[0]))}");
+                $"Nonstandard formats: {(String.Join(", ", nonStandardFormats ?? new string[0]))}");
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using NSwag;
 using NUnit.Framework;
 
-namespace jab.tests
+namespace jab.Test
 {
     public partial class ApiBestPracticeTestBase
     {
@@ -11,7 +11,7 @@ namespace jab.tests
         /// <param name="service">
         /// The <see cref="SwaggerService"/> to test.
         /// </param>
-        [TestCaseSource(nameof(Services))]
+        [TestCaseSource(nameof(ApiBestPracticeTestBase.Services))]
         public void RequireHttps(SwaggerService service)
         {
             Assert.That(

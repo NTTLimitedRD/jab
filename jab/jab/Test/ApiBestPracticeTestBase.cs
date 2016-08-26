@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 using jab.Interfaces;
 using NSwag;
 using NUnit.Framework;
 
-namespace jab.tests
+namespace jab.Test
 {
     public partial class ApiBestPracticeTestBase
     {
@@ -49,5 +48,24 @@ namespace jab.tests
         /// The container used to pass configuration to the test class.
         /// </summary>
         public static IJabTestConfiguration Configuration { get; set; }
+
+        /// <summary>
+        /// Register components.
+        /// </summary>
+        /// <param name="swaggerFile">
+        /// The contents of the swagger file. This cannot be null, empty or whitespace.
+        /// </param>
+        /// <param name="baseUrl">
+        /// The optional base URL to use for testing the web service.
+        /// </param>
+        public static void Register(string swaggerFile, Uri baseUrl = null)
+        {
+            if (string.IsNullOrWhiteSpace(swaggerFile))
+            {
+                throw new ArgumentNullException(nameof(swaggerFile));
+            }
+
+            Test.ApiBestPracticeTestBase.Configuration = new JabTestConfiguration(swaggerFile, baseUrl);
+        }
     }
 }
