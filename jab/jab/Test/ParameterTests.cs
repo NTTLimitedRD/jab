@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Jab.Interfaces;
 using NSwag;
@@ -83,7 +84,7 @@ namespace Jab.Test
             Assert.That(
                 queryParametersContainingSecrets,
                 Is.Not.Null.And.Empty,
-                $"Parameters: {(String.Join(", ", queryParametersContainingSecrets.Select(p => p.Name)))}");
+                $"Query parameters containing secrets: {(string.Join(", ", queryParametersContainingSecrets.Select(p => p.Name)))}");
         }
 
         /// <summary>
@@ -99,7 +100,7 @@ namespace Jab.Test
             Assert.That(
                 nonStandardFormats,
                 Is.Null.Or.Empty,
-                $"Nonstandard formats: {(string.Join(", ", nonStandardFormats ?? new string[0]))}");
+                $"Nonstandard formats produced: {(string.Join(", ", nonStandardFormats ?? new string[0]))}");
         }
 
         /// <summary>
@@ -115,7 +116,7 @@ namespace Jab.Test
             Assert.That(
                 nonStandardFormats,
                 Is.Null.Or.Empty,
-                $"Nonstandard formats: {(string.Join(", ", nonStandardFormats ?? new string[0]))}");
+                $"Nonstandard formats consumed: {(string.Join(", ", nonStandardFormats ?? new string[0]))}");
         }
     }
 }

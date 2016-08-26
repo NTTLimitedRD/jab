@@ -36,8 +36,13 @@ namespace Jab.Console
 
             try
             {
-                result =  Parser.Default.ParseArguments<CommandLineOptions>(args)
-                                .MapResult(OnRunTests, OnError);
+                result = Parser.Default.ParseArguments<CommandLineOptions>(args)
+                    .MapResult(OnRunTests, OnError);
+            }
+            catch (CommandLineArgumentException ex)
+            {
+                System.Console.Error.WriteLine(ex.Message);
+                result = ExitCodes.BadArgument;
             }
             catch (Exception ex)
             {
@@ -53,9 +58,34 @@ namespace Jab.Console
         /// </summary>
         /// <param name="commandLineOptions"></param>
         /// <returns></returns>
+        /// <exception cref="CommandLineArgumentException">
+        /// One or more arguments on the command line were invalid.
+        /// </exception>
         public static int OnRunTests(CommandLineOptions commandLineOptions)
         {
             TestEventListener testEventListener;
+
+            try
+            {
+                ApiBestPracticeTestBase.Register(
+                    File.ReadAllText(commandLineOptions.SwaggerFilePath),
+                    commandLineOptions.BaseUrl != null ? new Uri(commandLineOptions.BaseUrl) : null);
+            }
+            catch (IOException ex)
+            {
+                throw new CommandLineArgumentException(
+                    $"Swagger file '{commandLineOptions.SwaggerFilePath}' does not exist or cannot be read", ex);
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                throw new CommandLineArgumentException(
+                    $"Swagger file '{commandLineOptions.SwaggerFilePath}' cannot be accessed", ex);
+            }
+            catch (UriFormatException ex)
+            {
+                throw new CommandLineArgumentException(
+                    $"Base URL '{commandLineOptions.BaseUrl}' is not a valid URI", ex);
+            }
 
             testEventListener = new TestEventListener();
             testEventListener.OnTestCaseResult += TestEventListener_OnTestCaseResult;
@@ -81,10 +111,6 @@ namespace Jab.Console
         /// <returns></returns>
         public static int OnError(IEnumerable<Error> errors)
         {
-            // Current formatting sucks
-            // Console.Error.WriteLine(errors.First().ToString());
-
-            System.Console.Error.WriteLine("usage: jab.console.exe <path to swagger.json> [-u <api url>]");
             return ExitCodes.BadArgument;
         }
 
