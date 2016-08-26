@@ -37,16 +37,19 @@ namespace jab
             BaseUrl = baseUrl;
         }
 
+        /// <summary>
+        /// The <see cref="SwaggerService"/> used for testing.
+        /// </summary>
         public SwaggerService SwaggerService { get; }
 
+        /// <summary>
+        /// The optional URL of the web service to test.
+        /// </summary>
         public Uri BaseUrl { get; }
 
         /// <summary>
         /// Register components.
         /// </summary>
-        /// <param name="containerBuilder">
-        /// The <see cref="ContainerBuilder"/> to use. This cannot be null.
-        /// </param>
         /// <param name="swaggerFile">
         /// The contents of the swagger file. This cannot be null, empty or whitespace.
         /// </param>

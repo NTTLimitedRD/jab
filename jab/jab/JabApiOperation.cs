@@ -4,6 +4,9 @@ using NSwag;
 
 namespace jab
 {
+    /// <summary>
+    /// A swagger operation (i.e. web method) called by jab.
+    /// </summary>
     public class JabApiOperation : IJabApiOperation
     {
         /// <summary>
@@ -22,9 +25,24 @@ namespace jab
             Operation = operation;
         }
 
+        /// <summary>
+        /// The <see cref="SwaggerService"/>.
+        /// </summary>
         public SwaggerService Service { get;  }
+
+        /// <summary>
+        /// The path (non host portion of the URL).
+        /// </summary>
         public string Path { get;  }
+
+        /// <summary>
+        /// The HTTP method or verb used to call the web service.
+        /// </summary>
         public SwaggerOperationMethod Method { get;  }
+
+        /// <summary>
+        /// The <see cref="SwaggerOperation"/>.
+        /// </summary>
         public SwaggerOperation Operation { get;  }
     }
 }
