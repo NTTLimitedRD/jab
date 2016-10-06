@@ -1,5 +1,5 @@
 # jab
-REST API testing tool for security best practices.
+REST API testing tool for security best practices!
 
 [![Build status](https://ci.appveyor.com/api/projects/status/hfwawoff5fl82i05?svg=true)](https://ci.appveyor.com/project/tonybaloney/jab)
 
