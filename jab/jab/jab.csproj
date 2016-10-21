@@ -33,6 +33,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <!-- Fix for CS1701 error when referencing NewtonSoft.Json -->
   <PropertyGroup Condition="'$(OS)' != 'Windows_NT'">
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
   </PropertyGroup>
