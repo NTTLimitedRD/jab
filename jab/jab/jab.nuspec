@@ -17,13 +17,7 @@
         <dependency id="Newtonsoft.Json" version="9.0.1" />
         <dependency id="NJsonSchema" version="3.3.6061.16591" />
         <dependency id="NSwag.Core" version="4.3.6065.35518"  />
-        <dependency id="xunit" version="2.1.0" />
-        <dependency id="xunit.abstractions" version="2.0.0" />
-        <dependency id="xunit.assert" version="2.1.0"  />
-        <dependency id="xunit.core" version="2.1.0" />
-        <dependency id="xunit.extensibility.core" version="2.1.0"  />
-        <dependency id="xunit.extensibility.execution" version="2.1.0" />
-        <dependency id="xunit.runner.visualstudio" version="2.1.0" />
+        <dependency id="NUnit" version="3.4.1"  />
       </group>
     </dependencies>
   </metadata>
